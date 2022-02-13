@@ -21,13 +21,28 @@ if (!isset ($_GET['page']) ) {
 }  
 
 $moviesQuery = "SELECT * FROM wf_releases";
+
+if (isset ($_GET['type']) ) {  
+
+    $type = $_GET['type'];
+    if(strcmp($type, "movies") == 0){
+      $moviesQuery = "SELECT * FROM wf_releases where release_type = 'movie'";
+    } 
+
+    if(strcmp($type, "series") == 0){
+      $moviesQuery = "SELECT * FROM wf_releases where release_type = 'tv'";
+    } 
+}  
+
+
+
 $movies = mysqli_query($link, $moviesQuery);
 $number_of_result = mysqli_num_rows($movies);  
 $results_per_page = 20;  
 $number_of_page = ceil ($number_of_result / $results_per_page); 
 $page_first_result = ($currentPage-1) * $results_per_page;  
 
-   $query = "SELECT * FROM wf_releases LIMIT " . $page_first_result . ',' . $results_per_page;  
+   $query = $moviesQuery . " LIMIT " . $page_first_result . ',' . $results_per_page;  
    $result = mysqli_query($link, $query);   
 
 ?>
@@ -50,7 +65,7 @@ $page_first_result = ($currentPage-1) * $results_per_page;
   <ul class="pagination">
 <?php
 for($page = 1; $page<= $number_of_page; $page++) {  
-  echo '<li class="page-item' . (($page== $currentPage)?' active':"") . '"><a class="page-link" href="titles.php?page=' .$page.'">' .$page.'</a></li>';
+  echo '<li class="page-item' . (($page== $currentPage)?' active':"") . '"><a class="page-link" href="titles.php?page=' .$page.'&type='.$_GET['type'].'">' .$page.'</a></li>';
 } 
 ?>
  </ul>
