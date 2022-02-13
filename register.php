@@ -10,7 +10,7 @@ require('includes/header.php');
   <div class="header">
     
 <?php
-$identifier = "register";
+$identifier = "login";
 require ('includes/database.php');
 require('includes/nav.php');
 

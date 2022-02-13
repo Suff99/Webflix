@@ -24,7 +24,10 @@ createMeta("About", "About", "");
 
 <?php
 
-//addMovies($link, 10);
+
+
+//addMovies($link, 20);
+//addTvsShows($link, 20);
 
 function addMovies($link, $pages){
   for ($x = 1; $x <= $pages; $x++) {
@@ -46,8 +49,36 @@ function addMovies($link, $pages){
               $youtube_id = $vid->key;
           }
       } 
+
+      $poster = getPoster($value->id, "movie");
+      $backdrop = getBackDrop($value->id, "movie");
+
+
+      $spoken_languages = [];
+
+      foreach($tvShow->spoken_languages as $lkey=>$lang){ 
+       if(!in_array($lang->english_name, $spoken_languages)) {
+        array_push($spoken_languages, $lang->english_name);
+      }
+    }
+
+      $information = array(
+        "tagline" => $tvShow->tagline,
+        "description" => $value->overview,
+        "languages" => $spoken_languages
+      );
+
+      $images = array(
+        "poster" => $poster,
+        "backdrop" => $backdrop,
+    );
+
+    
+
+    
+
       if($youtube_id != ""){
-      addRelease($link, $value->release_date, $value->original_title, $value->overview, $youtube_id, $value->vote_average, $value->id, "Movie", $tvShow->homepage);
+      addRelease($link, $value->release_date, $value->original_title, json_encode($information), $youtube_id, json_encode($images), $value->id, "movie", $tvShow->homepage);
     } else {
         printf("<p>Skipped $value->original_title</p>");
       }
@@ -75,8 +106,31 @@ function addTvsShows($link ,$pages){
               $youtube_id = $vid->key;
           }
       } 
+
+      $poster = getPoster($value->id, "tv");
+      $backdrop = getBackDrop($value->id, "tv");
+
+      $spoken_languages = [];
+
+      foreach($tvShow->spoken_languages as $lkey=>$lang){ 
+       if(!in_array($lang->english_name, $spoken_languages)) {
+        array_push($spoken_languages, $lang->english_name);
+      }
+    }
+
+      $information = array(
+        "tagline" => $value->overview,
+        "description" => $value->overview,
+        "languages" => $spoken_languages
+    );
+
+      $images = array(
+        "poster" => $poster,
+        "backdrop" => $backdrop,
+    );
+
       if($youtube_id != ""){
-      addRelease($link, $value->first_air_date, $value->name, $value->overview, $youtube_id, $value->vote_average, $value->id, "TV Series", $tvShow->homepage);
+      addRelease($link, $value->first_air_date, $value->name, json_encode($information), $youtube_id, json_encode($images), $value->id, "series", $tvShow->homepage);
       printf("<p>Added $value->name</p>");
     } else {
         printf("<p>Skipped $value->name</p>");

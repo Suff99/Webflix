@@ -9,8 +9,9 @@ function validateGet($value, $error_msg, $errors_array, $sql){
     return false;
 }
 
-function addRelease($db_link, $date, $release_title, $release_desc, $trailer_id, $vote, $api_id, $release_type, $watch_link){
-    $addMovieQuery = "INSERT INTO wf_releases(`title`, `description`, `trailer`, `watch_link`, `date`, `vote_average`, `release_type`, `api_id`) VALUES ('$release_title','$release_desc','$trailer_id','$watch_link','$date','$vote','$release_type','$api_id')";
+function addRelease($db_link, $date, $release_title, $information_json, $trailer_id, $image_json, $api_id, $release_type, $watch_link){
+    $addMovieQuery = "INSERT INTO wf_releases(`title`, `information`, `trailer`, `watch_link`, `date`, `images`, `release_type`, `api_id`) VALUES ('$release_title','$information_json','$trailer_id','$watch_link','$date','$image_json','$release_type','$api_id')";
+    printf("<p>Skipped  $addMovieQuery </p><br>");
     $result = @mysqli_query ( $db_link, $addMovieQuery ) ;
 }
 
@@ -27,7 +28,7 @@ function createMeta($title, $description, $thumbnail){
 }
 
 function addComment($link, $r_comment, $r_rating, $r_userid, $r_release_id){
-    $addCommentQ = "INSERT INTO `wf_comments` (`message`, `rating`, `release_id`, `user_id`) VALUES ('$r_comment', '$r_rating', '$r_release_id', '$r_userid');";
+    $addCommentQ = "INSERT INTO `wf_comments` (`message`, `rating`, `release_id`, `user_id`, `date`) VALUES ('$r_comment', '$r_rating', '$r_release_id', '$r_userid', now());";
     $result = @mysqli_query ( $link, $addCommentQ ) ;
 }
 
@@ -38,19 +39,19 @@ function createMovieCard($movie){
     <div class="col zoom"> <div class="col-sm"> 
     <div class="card" style="width: 20rem;">';
     echo '<a data-toggle="collapse" href="#release_'.$movie['id'].'" role="button" aria-expanded="false" aria-controls="collapse">';
-    echo '<img class="card-img-top" src="' . getPoster($movie['api_id'], $movie['release_type']) .'" alt="'. $movie['title'] . ' logo"></a>';
+    echo '<img class="card-img-top" src="' . json_decode($movie['images'])->poster . '" alt="'. $movie['title'] . ' logo"></a>';
     echo '<div class="card-body">';
     echo '<h5 class="card-title">' . $movie['title'] . ' ' . '<i class="'. ($movie['release_type'] == "movie" ? "bi bi-film" : "bi bi-tv-fill") . '" >'.'</i>'  . createBadge($movie) . '</h5>';
-    echo '<p class="card-text"><small class="text-muted"> <i class="bi bi-activity"></i>' . $movie['vote_average'] . '</small></p>';
-
     echo '<div class="collapse" id="release_'.$movie['id'].'">';
-    echo '<p class="card-text">' . $movie['description'] . '</p>';
-    echo '<p class="card-text"><small class="text-muted"> Watch on ' . $movie['date'] . '</small></p>';
-    echo '<a href="https://www.youtube.com/watch?v=' . $movie['trailer'] .'" class="btn btn-primary">Trailer</a>';
+    echo '<p class="card-text">' . json_decode($movie['information'])->tagline . '</p>';
+    echo '<button type="button" class="btn btn-primary video-btn" data-toggle="modal" data-src="https://www.youtube.com/embed/' . $movie['trailer'] .'" data-target="#v_modal">
+    Trailer
+  </button>';
     echo '  <a href="release.php?id=' . $movie['id'] .'" class="btn btn-primary">More Info</a>';
     echo '</div>';
 
     echo '</div></div></div></div>';
+    
 }
 
 function noNewReleases($db_link){

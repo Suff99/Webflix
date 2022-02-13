@@ -1,45 +1,34 @@
 .zoom {
 	transition: transform .2s;
-	/* Animation */
+   /* Animation */
 	margin: 0 auto;
 }
-
 .zoom:hover {
 	transform: scale(1.2);
 	z-index: 150;
 }
-
 a {
 	text-decoration: none;
 }
-
-
 /* Scrollbar */
-
- ::-webkit-scrollbar {
+::-webkit-scrollbar {
 	width: 10px;
 }
-
- ::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
 	background: silver;
 }
-
- ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
 	background: black;
 }
-
- ::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
 	background: silver;
 }
-
 a h5 {
-	text-decoration: none
+	text-decoration: none 
 }
-
 a:hover {
 	text-decoration: none;
 }
-
 h1 {
 	text-align: center;
 	color: black;
@@ -48,9 +37,7 @@ h1 {
 	font-style: normal;
 	text-decoration: none;
 }
-
-label,
-span {
+label, span {
 	text-align: center;
 	color: black;
 	font-family: 'RecursoSansRegular';
@@ -58,7 +45,6 @@ span {
 	font-style: normal;
 	text-decoration: none;
 }
-
 .new {
 	text-align: center;
 	color: rgb(255, 255, 255);
@@ -67,7 +53,6 @@ span {
 	text-decoration: none;
 	font-family: 'RecursoSansRegular';
 }
-
 .button {
 	background-color: black;
 	color: white;
@@ -81,14 +66,12 @@ span {
 	font-weight: normal;
 	font-style: normal;
 }
-
 p {
 	font-family: 'RecursoSansRegular';
 	font-weight: normal;
 	font-style: normal;
 	text-decoration: none;
 }
-
 h5 {
 	color: black;
 	font-family: 'RecursoSansRegular';
@@ -96,7 +79,6 @@ h5 {
 	font-style: normal;
 	text-decoration: none;
 }
-
 ul {
 	list-style-type: none;
 	margin: 0;
@@ -107,24 +89,19 @@ ul {
 	font-weight: normal;
 	font-style: normal;
 }
-
 .btn-primary {
 	color: #fff;
 	background-color: black;
 	border-color: black;
 }
-
-.nav,
-nav-item {
+.nav, nav-item {
 	border-radius: 10px;
 }
-
 .header {
 	position: fixed;
 	width: 100%;
 	z-index: 750;
 }
-
 .footer {
 	position: fixed;
 	bottom: 0;
@@ -132,82 +109,68 @@ nav-item {
 	border-radius: 10px;
 	z-index: 200;
 }
-
 a {
-	color: whitesmoke
+	color: whitesmoke 
 }
-
 body {
 	background-color: silver;
 	margin-left: 10px;
 	margin-right: 10px;
 }
-
 li a:hover {
 	background-color: #3399ff;
 	color: aliceblue;
 }
-
 .active {
 	background-color: #3399ff;
 }
-
 .glow {
 	color: #fff;
 	text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #0ff, 0 0 80px #0ff, 0 0 90px #0ff, 0 0 100px #0ff, 0 0 150px #0ff;
 }
-
 body {
 	font-family: Arail, sans-serif;
 }
-
+.url {
+	color: #2c0a0a;
+}
 .rating {
-    display: flex;
-    margin-top: -10px;
-    flex-direction: row-reverse;
-    margin-left: -4px;
-    float: left
+	display: flex;
+	margin-top: -10px;
+	flex-direction: row-reverse;
+	margin-left: -4px;
+	float: left 
 }
-
 .rating>input {
-    display: none
+	display: none 
 }
-
 .rating>label {
-    position: relative;
-    width: 19px;
-    font-size: 25px;
-    color: goldenrod;
-    cursor: pointer
+	position: relative;
+	width: 19px;
+	font-size: 25px;
+	color: goldenrod;
+	cursor: pointer 
 }
-
 .rating>label::before {
-    content: "\2605";
-    position: absolute;
-    opacity: 0
+	content: "\2605";
+	position: absolute;
+	opacity: 0 
 }
-
-.rating>label:hover:before,
-.rating>label:hover~label:before {
-    opacity: 1 !important
+.rating>label:hover:before, .rating>label:hover~label:before {
+	opacity: 1 !important 
 }
-
 .rating>input:checked~label:before {
-    opacity: 1
+	opacity: 1 
 }
-
 .rating:hover>input:checked~label:before {
-    opacity: 0.4
+	opacity: 0.4 
 }
-
 .yt_container {
 	position: relative;
 	overflow: hidden;
 	width: 100%;
-	padding-top: 56.25%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
-  }
-
-/* Then style the iframe to fit in the container div with full height and width */
+	padding-top: 56.25%;
+}
 .responsive-iframe {
 	position: absolute;
 	top: 0;
@@ -216,4 +179,22 @@ body {
 	right: 0;
 	width: 100%;
 	height: 100%;
-  }
+}
+.modal-dialog {
+	max-width: 800px;
+	margin: 30px auto;
+}
+.modal-body {
+	position:relative;
+	padding:0px;
+}
+.close {
+	position:absolute;
+	right:-30px;
+	top:0;
+	z-index:999;
+	font-size:2rem;
+	font-weight: normal;
+	color:#fff;
+	opacity:1;
+}

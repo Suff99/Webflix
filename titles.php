@@ -3,13 +3,10 @@
   <head>
 <?php 
 require('includes/header.php');
-$identifier = 'whatson';
 ?>
  </head>
 
 <?php
-require('includes/database.php');
-require('includes/nav.php');
 
 
 $currentPage = 0; 
@@ -20,6 +17,7 @@ if (!isset ($_GET['page']) ) {
   $currentPage = $_GET['page'];  
 }  
 
+$identifier = "whatson";
 $moviesQuery = "SELECT * FROM wf_releases";
 
 if (isset ($_GET['type']) ) {  
@@ -27,13 +25,17 @@ if (isset ($_GET['type']) ) {
     $type = $_GET['type'];
     if(strcmp($type, "movies") == 0){
       $moviesQuery = "SELECT * FROM wf_releases where release_type = 'movie'";
+      $identifier = "movies";
     } 
 
     if(strcmp($type, "series") == 0){
-      $moviesQuery = "SELECT * FROM wf_releases where release_type = 'tv'";
+      $moviesQuery = "SELECT * FROM wf_releases where release_type = 'series'";
+      $identifier = "tv_shows";
     } 
 }  
 
+require('includes/database.php');
+require('includes/nav.php');
 
 
 $movies = mysqli_query($link, $moviesQuery);
@@ -47,17 +49,55 @@ $page_first_result = ($currentPage-1) * $results_per_page;
 
 ?>
 <h1>What's on?</h1>
+
 <div class="container-fluid">
 
 <div class="row">
+  
 <?php
    while ($row = mysqli_fetch_array($result)) {  
     createMovieCard($row);
 }  
 
 ?>
+
+<div class="modal fade" id="v_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
+        </button>        
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/Mkum7G-0vWg" id="the_trailer"  allowscriptaccess="always" allow="autoplay"></iframe>
+</div>  
+      </div>
+    </div>
+  </div>
+</div> 
+  
+
+
   </div>
 </div>
+
+<script>
+$(document).ready(function() {
+
+var $videoSrc = ""; 
+
+$('.video-btn').click(function() {
+    $videoSrc = $(this).data( "src" );
+    document.getElementById('the_trailer').src = $videoSrc;
+});
+
+$('#v_modal').on('hide.bs.modal', function (e) {
+  document.getElementById('the_trailer').src = "";
+});
+
+
+});
+ </script> 
 
 
 <br><br><br>

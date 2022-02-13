@@ -88,7 +88,8 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' )
  </style>
 
 <div class="container">
-    <div class="col-sm">
+    <div class="row">
+        <div class="col-sm">
         <form action="login.php" method="post" class="alert-dismissible fade show" role="alert" >
             <div class="mb-3">
                 <label class="form-label">Email</label>
@@ -99,9 +100,13 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' )
                 <input type="password" class="form-control" name="password" placeholder="Password">
             </div>
             <button type="submit" class="btn btn-primary" value="Login" >Sign in</button>
+            <button type="button" class="btn btn-primary" onclick="window.location.href='register.php';" >Register</button>
         </form>
+          </div>
     </div>
 </div>
+
+
 
 <?php
  //$moviesQuery = "SELECT * FROM wf_releases order by RAND() LIMIT 4;";
