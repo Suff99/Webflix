@@ -4,7 +4,7 @@
 <?php
 require('includes/header.php');
 ?>
- </head>
+
 
   <body class="d-flex flex-column min-vh-100">
   <div class="header">
@@ -30,6 +30,8 @@ createMeta($movie['title'], json_decode($movie['information'])->tagline, json_de
 
 ?>
 </div>
+</head>
+
 <br><br><br><br><br>
 
 <h1 style="<?php echo (empty($movie) ? '' : 'display: none') ?>">Aw Snap!</h1>

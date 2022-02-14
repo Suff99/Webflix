@@ -3,11 +3,6 @@
   <head>
 <?php 
 require('includes/header.php');
-?>
- </head>
-
-<?php
-
 
 $currentPage = 0; 
 
@@ -18,6 +13,7 @@ if (!isset ($_GET['page']) ) {
 }  
 
 $identifier = "whatson";
+$title = "All Titles!";
 $moviesQuery = "SELECT * FROM wf_releases";
 
 if (isset ($_GET['type']) ) {  
@@ -26,11 +22,13 @@ if (isset ($_GET['type']) ) {
     if(strcmp($type, "movies") == 0){
       $moviesQuery = "SELECT * FROM wf_releases where release_type = 'movie'";
       $identifier = "movies";
+      $title = "Movies!";
     } 
 
     if(strcmp($type, "series") == 0){
       $moviesQuery = "SELECT * FROM wf_releases where release_type = 'series'";
       $identifier = "tv_shows";
+      $title = "TV Shows!";
     } 
 }  
 
@@ -44,10 +42,16 @@ $results_per_page = 20;
 $number_of_page = ceil ($number_of_result / $results_per_page); 
 $page_first_result = ($currentPage-1) * $results_per_page;  
 
-   $query = $moviesQuery . " LIMIT " . $page_first_result . ',' . $results_per_page;  
-   $result = mysqli_query($link, $query);   
+$query = $moviesQuery . " LIMIT " . $page_first_result . ',' . $results_per_page;  
+$result = mysqli_query($link, $query);   
+
+createMeta($title, "Look at our large collection of titles! Available for streaming now!", "");
+
 
 ?>
+</head>
+
+
 <h1>What's on?</h1>
 
 <div class="container-fluid">
