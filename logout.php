@@ -7,7 +7,7 @@ require('includes/header.php');
 require('includes/database.php');
 require('includes/nav.php');
 
-session_start() ;
+if (@session_id() == "") @session_start();
 if(!isset($_SESSION[ 'username' ])){
     header('Location: '. 'login.php');
 }

@@ -79,6 +79,7 @@ function addUser($link, $uEmail, $uUsername,  $uFirstName, $uLastName, $uPasswor
 }
 
 ?>
+</div>
 
 <h1>Register</h1>
 

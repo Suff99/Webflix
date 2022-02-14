@@ -9,10 +9,16 @@ function validateGet($value, $error_msg, $errors_array, $sql){
     return false;
 }
 
-function addRelease($db_link, $date, $release_title, $information_json, $trailer_id, $image_json, $api_id, $release_type, $watch_link){
-    $addMovieQuery = "INSERT INTO wf_releases(`title`, `information`, `trailer`, `watch_link`, `date`, `images`, `release_type`, `api_id`) VALUES ('$release_title','$information_json','$trailer_id','$watch_link','$date','$image_json','$release_type','$api_id')";
+function addRelease($db_link, $date, $release_title, $information_json, $trailer_id, $image_json, $release_type, $watch_link){
+    $addMovieQuery = "INSERT INTO wf_releases(`title`, `information`, `trailer`, `watch_link`, `date`, `images`, `release_type`) VALUES ('$release_title','$information_json','$trailer_id','$watch_link','$date','$image_json','$release_type')";
     printf("<p>Skipped  $addMovieQuery </p><br>");
     $result = @mysqli_query ( $db_link, $addMovieQuery ) ;
+}
+
+function lockPageFromUser(){
+    if($_SESSION['role'] != "admin"){
+        header('Location: '. '403.php');
+    }
 }
 
 function createMeta($title, $description, $thumbnail){
@@ -72,8 +78,9 @@ function getPoster($api_id, $type){
     return "https://image.tmdb.org/t/p/w300_and_h450_bestv2" .$data->backdrop_path;
   }
 
-function getFullUrl(){
-    return 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+function getYtIdFromURl($url){
+    parse_str( parse_url( $url, PHP_URL_QUERY ), $gets );
+    return $gets['v']; 
 }
 
 function createBadge($movie){

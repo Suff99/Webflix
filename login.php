@@ -5,8 +5,6 @@
 require('includes/header.php');
 ?>
  </head>
-
-  <body class="d-flex flex-column min-vh-100">    
 <?php
 $identifier = "login";
 require ('includes/database.php');
@@ -57,7 +55,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' )
   list ( $check, $data ) = validate ( $link, $_POST[ 'email' ], $_POST[ 'password' ] ) ;
   if ( $check )  
   {
-    session_start();
+    if (@session_id() == "") @session_start();
     $_SESSION[ 'user_id' ] = $data[ 'user_id' ] ;
     $_SESSION[ 'first_name' ] = $data[ 'first_name' ] ;
     $_SESSION[ 'last_name' ] = $data[ 'last_name' ] ;
@@ -80,6 +78,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' )
 
 ?>
 
+<body class="d-flex flex-column min-vh-100">    
 
 <h1>Login</h1>
 
@@ -106,17 +105,6 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' )
     </div>
 </div>
 
-
-
-<?php
- //$moviesQuery = "SELECT * FROM wf_releases order by RAND() LIMIT 4;";
- //$result = mysqli_query($link, $moviesQuery);
- // while ($movie = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
- //     createMovieCard($movie);
- // }
-?>
-
-</div>
 
 
 

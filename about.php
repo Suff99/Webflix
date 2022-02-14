@@ -6,8 +6,7 @@ require('includes/header.php');
 ?>
  </head>
 
-  <body class="d-flex flex-column min-vh-100">
-  <div class="header">
+
     <?php
 $identifier = "about";
 require ('includes/database.php');
@@ -16,15 +15,15 @@ require('includes/nav.php');
 
 createMeta("About", "About", "");
 ?>
-  <h1>About Webflix</h1>
+
+<body class="d-flex flex-column min-vh-100">
+<h1>About Webflix</h1>
 
 <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
     <p> Under Construction </p>
 </div>
 
 <?php
-
-
 
 //addMovies($link, 20);
 //addTvsShows($link, 20);

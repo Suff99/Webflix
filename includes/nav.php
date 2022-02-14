@@ -25,7 +25,7 @@ require('util.php');
       
     
       <?php 
-        session_status() === PHP_SESSION_ACTIVE ?: session_start();
+         if (@session_id() == "") @session_start();
         
         if(isset($_SESSION[ 'username' ]) && strcmp($_SESSION['role'], "admin") == 0){
           echo '<li class="nav-item"> <a class="nav-link' .  (($identifier=='admin')?' active"':"")   . '" href="admin.php"><i class="bi bi-person-plus-fill"></i> Admin</a></li>';

@@ -11,7 +11,7 @@ require('includes/header.php');
     <?php
 require('includes/database.php');
 
-session_status() === PHP_SESSION_ACTIVE ?: session_start();
+if (@session_id() == "") @session_start();
 
 
 $id = htmlspecialchars($_GET["id"]);
@@ -183,7 +183,7 @@ if (!isset ($_GET['page']) ) {
       <div class="card-body">
         <blockquote class="blockquote mb-0">
           <p>'.$comment['message'].'</p>
-          <footer class="blockquote-footer">'.$comment['username'].'</footer>';
+          <footer class="blockquote-footer">@'.$comment['username'].'</footer>';
           if($comment['user_id'] == $_SESSION['user_id']) {
             echo '<a class="nav-link text-black" href="includes/delete_comment.php?release='.$id.'&comment='.$comment['comment_id'] .'"><i class="bi bi-trash-fill"></i> Delete</a>';
           }
