@@ -88,7 +88,18 @@ createMeta($movie['title'], json_decode($movie['information'])->tagline, json_de
     </tr>
     <tr>
       <th scope="row">Categories</th>
-      <td>TBC</td>
+      <td><?php 
+      $categoryString = "";
+      $cate =  json_decode($movie['categories']);
+      foreach ($cate as $category) {
+        $sql = "SELECT `name` FROM `wf_categories` WHERE `id`= $category;";
+        $result = @mysqli_query ( $link, $sql ) ;
+        while ($row = mysqli_fetch_array($result)) {  
+        $categoryString .= $row['name'] . ", ";
+        }
+    }
+     echo substr($categoryString, 0, -2);
+      ?></td>
     </tr>
     <tr>
       <th scope="row">Watch</th>
@@ -174,22 +185,22 @@ if (!isset ($_GET['page']) ) {
       }
       $rating = $rating . "<br>";
       
-      
-
-      echo '<div class="row" style="width:105%"><div class="card col-sm">
-      <div class="card-header">'.
-      $rating
-      .'</div>
-      <div class="card-body">
-        <blockquote class="blockquote mb-0">
+      echo '<div class="card p-3">
+      <figure class="p-3 mb-0">
+        <blockquote class="blockquote">
+           <p>' . $rating .'</p>
           <p>'.$comment['message'].'</p>
-          <footer class="blockquote-footer">@'.$comment['username'].'</footer>';
-          if($comment['user_id'] == $_SESSION['user_id']) {
+        </blockquote>
+        <figcaption class="blockquote-footer mb-0 text-muted">
+              @'.$comment['username'].'</cite> ';
+
+       if($comment['user_id'] == $_SESSION['user_id']) {
             echo '<a class="nav-link text-black" href="includes/delete_comment.php?release='.$id.'&comment='.$comment['comment_id'] .'"><i class="bi bi-trash-fill"></i> Delete</a>';
-          }
-          echo '</blockquote>
-      </div>
-      </div></div><br>';
+         }   
+
+         echo '</figcaption>
+      </figure>
+    </div>';
     }
   }
 ?>

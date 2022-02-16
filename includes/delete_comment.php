@@ -18,7 +18,6 @@
 
 function deleteComment($link, $comm, $user){
   $deleteQuery = "DELETE FROM wf_comments WHERE `comment_id` = $comm AND `user_id` = $user";
-  printf($deleteQuery);
   $result = @mysqli_query ( $link, $deleteQuery ) ;
 }
 
