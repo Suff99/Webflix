@@ -1,27 +1,29 @@
-function on() {
-        var divsToHide = document.getElementsByClassName("card"); 
-       if(divsToHide.length>0){
-               for(var i = 0; i < divsToHide.length; i++){
-       
-             if( divsToHide[i].style.display== "none"){
-           divsToHide[i].style.display = "block";
-             }else{
-       
-                  divsToHide[i].style.display = "none"; 
-             }    
-       }}
+
+
+function shareOnTwitter(id, title) {
+  var url = 'https://twitter.com/intent/tweet?url=https%3A%2F%2Fcraig.software%2Fwebflix%2Frelease.php%3Fid%3D' + id + '&text=Just%20finished%20watching%20' + title + '&hashtags=Popcorn%2CWebflix%20';
+  TwitterWindow = window.open(url, 'TwitterWindow', width = 600, height = 300);
+  return false;
 }
 
-
-function shareOnFB(siteURL, title){
-  var url = 'https://www.facebook.com/sharer/sharer.php?u=' + siteURL + '&text=#popcorntime Just watched ' + title + ' on ' + siteURL;
-  window.open(url, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
+function shareOnFacebook(id){
+  var url = 'https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fcraig.software%2Fwebflix%2Frelease.php%3Fid%3D'+id;
+  FacebookWindow = window.open(url, 'FacebookWindow', width = 600, height = 300);
   return false;
 }
 
 
-function shareOnTwitter(siteURL, title){
-var url = 'https://twitter.com/intent/tweet?url='+siteURL+'&text=#popcorntime Just watched ' + title + ' on ' + siteURL;
-TwitterWindow = window.open(url, 'TwitterWindow',width=600,height=300);
-return false;
+function createDatePicker(calander_id) {
+  $.noConflict();
+  jQuery(document).ready(function ($) {
+    $(calander_id).datepicker({
+      dateFormat: 'dd-mm-yy',
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "-100:+0",
+      ok: '',
+      clear: 'Clear selection',
+      close: 'Cancel'
+    });
+  });
 }

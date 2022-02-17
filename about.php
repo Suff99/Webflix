@@ -1,31 +1,32 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
+  <?php
+  require('includes/header.php');
+  ?>
+</head>
+
+
 <?php
-require('includes/header.php');
-?>
- </head>
-
-
-    <?php
 $identifier = "about";
-require ('includes/database.php');
+require('includes/database.php');
 require('includes/nav.php');
 
 
-createMeta("About", "About", "");
+createMetaTags("About", "About", "");
 ?>
 
 <body class="d-flex flex-column min-vh-100">
-<h1>About Webflix</h1>
+  <h1>About Webflix</h1>
 
-<div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
+  <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
     <p> Under Construction </p>
-</div>
+  </div>
 
-<?php
+  <?php
 
 
 
-require('includes/footer.php');
-?>
+  require('includes/footer.php');
+  ?>

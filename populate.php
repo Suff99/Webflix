@@ -4,19 +4,10 @@
 include('includes/util.php');
 include('includes/database.php');
 
-//addMovies($link, 20);
-//addTvsShows($link, 20);
-langs();
+addMovies($link, 20);
+addTvsShows($link, 20);
 
-function langs(){
-  $langList = file_get_contents("https://api.themoviedb.org/3/configuration/languages?api_key=5cd5948d48817e54d6fb43905f56a80f");
-  $data  = json_decode($langList);
-  printf($data);
-  foreach($data as $key){
-    printf($key->english_name . "<br>");
-  }
 
-}
 
 function addMovies($link, $pages){
     for ($x = 1; $x <= $pages; $x++) {
@@ -184,4 +175,15 @@ function addMovies($link, $pages){
   }
 }  
 
-?>
+
+function getPoster($api_id, $type){
+  $url = file_get_contents("https://api.themoviedb.org/3/$type/$api_id?api_key=5cd5948d48817e54d6fb43905f56a80f");  
+  $data  = json_decode($url);
+  return "https://image.tmdb.org/t/p/w300_and_h450_bestv2" .$data->poster_path;
+}
+
+function getBackDrop($api_id, $type){
+  $url = file_get_contents("https://api.themoviedb.org/3/$type/$api_id?api_key=5cd5948d48817e54d6fb43905f56a80f");  
+  $data  = json_decode($url);
+  return "https://image.tmdb.org/t/p/w300_and_h450_bestv2" .$data->backdrop_path;
+}
