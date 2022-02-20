@@ -1,12 +1,6 @@
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
+
+  <br><br>
 <footer>
   <style>
     li a:hover {

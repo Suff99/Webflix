@@ -199,3 +199,6 @@ body {
 	opacity:1;
 }
 
+.content {
+	position: relative;
+  }

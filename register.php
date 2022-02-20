@@ -1,12 +1,6 @@
 <!doctype html>
 <html lang="en">
 
-<head>
-  <?php
-  require('includes/header.php');
-  ?>
-</head>
-
 <body class="d-flex flex-column min-vh-100">
   <?php
   $identifier = "login";
@@ -20,14 +14,14 @@
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     require('includes/database.php');
     $potentialErrors = array();
-    $userName = validateGet('username', 'Please give a username', $potentialErrors, $link);
-    $email = validateGet('email', 'Please give a email', $potentialErrors, $link);
-    $first_name = validateGet('first_name', 'Please give first name', $potentialErrors, $link);
-    $last_name = validateGet('last_name', 'Please give last name', $potentialErrors, $link);
-    $password_validate = validateGet('password_validate', 'Please render your password', $potentialErrors, $link);
-    $password = validateGet('password', 'Please give a password', $potentialErrors, $link);
-    $dob = validateGet('dob', 'Please give DOB', $potentialErrors, $link);
-    $contact = validateGet('contact', 'Please give Contact Number', $potentialErrors, $link);
+    $userName = confirmGetExistence('username', $link);
+    $email = confirmGetExistence('email',  $link);
+    $first_name = confirmGetExistence('first_name', $link);
+    $last_name = confirmGetExistence('last_name', $link);
+    $password_validate = confirmGetExistence('password_validate', $link);
+    $password = confirmGetExistence('password',  $link);
+    $dob = confirmGetExistence('dob', $link);
+    $contact = confirmGetExistence('contact', $link);
 
     $userAge = calculateAge($dob);
     if ($userAge < 13) {
@@ -89,7 +83,9 @@
 
 
   <div class="container">
-
+  <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
+  <img class="card-img" src="img/logo.png" alt="Logo" style="width:20%">
+  </div>
     <h1>Register</h1>
     <form action="register.php" class="row g-3" method="post" class="alert-dismissible fade show" role="alert">
       <div class="col-md-4">

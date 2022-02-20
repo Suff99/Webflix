@@ -1,14 +1,7 @@
 <!doctype html>
 <html lang="en">
 
-<head>
-  <?php
-  require('includes/header.php');
-  ?>
-</head>
-
 <h1>Add Title</h1>
-
 <div class="header">
   <?php
   $identifier = "admin";
@@ -23,15 +16,17 @@
 
     require('includes/database.php');
     $potentialErrors = array();
-    $title = validateGet('title', 'Please give a comment', $potentialErrors, $link);
-    $tagline = validateGet('tagline', 'Please give a tagline', $potentialErrors, $link);
-    $description = validateGet('description', 'Please give a description', $potentialErrors, $link);
-    $poster_url = validateGet('poster_url', 'Please give a poster_url', $potentialErrors, $link);
-    $backdrop_url = validateGet('backdrop_url', 'Please give a backdrop_url', $potentialErrors, $link);
-    $release_type = validateGet('release_type', 'Please give a release_type', $potentialErrors, $link);
-    $trailer = validateGet('trailer_id', 'Please give a trailer_id', $potentialErrors, $link);
-    $watch_link = validateGet('watch_link', 'Please give a watch_link', $potentialErrors, $link);
-    $release_date = validateGet('release_date', 'Please give a release_date', $potentialErrors, $link);
+    $title = confirmGetExistence('title', $link);
+    $tagline = confirmGetExistence('tagline', $link);
+    $description = confirmGetExistence('description', $link);
+    $poster_url = confirmGetExistence('poster_url', $link);
+    $backdrop_url = confirmGetExistence('backdrop_url', $link);
+    $release_type = confirmGetExistence('release_type', $link);
+    $trailer = confirmGetExistence('trailer_id', $link);
+    $watch_link = confirmGetExistence('watch_link', $link);
+    $release_date = confirmGetExistence('release_date', $link);
+    $lang = confirmGetExistence('select_lang', $link);
+
 
     $trailer_id = getYtIdFromURl($trailer);
     if (empty($trailer_id)) {
@@ -39,11 +34,12 @@
     }
 
     $categories = json_encode($_POST['categories']);
+    $languages = json_encode($_POST['select_lang']);
 
     $information = array(
       "tagline" => $tagline,
       "description" => htmlspecialchars($description, ENT_QUOTES, 'UTF-8'),
-      "languages" => "English"
+      "languages" => $languages
     );
 
     $images = array(
@@ -78,7 +74,13 @@
 
 </div>
 
+
 <body class="d-flex flex-column min-vh-100">
+
+<div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
+  <img class="card-img" src="img/logo.png" alt="Logo" style="width:20%">
+  </div>
+
   <div class="container">
     <div class="col-sm">
       <form action="admin.php" method="post" class="alert-dismissible fade show" role="alert">

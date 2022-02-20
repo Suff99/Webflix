@@ -2,22 +2,22 @@
 <html lang="en">
 
 <head>
-  <?php
-  require('includes/header.php');
-  ?>
-</head>
-
-
 <?php
 $identifier = "about";
 require('includes/database.php');
 require('includes/nav.php');
 
-
 createMetaTags("About", "About", "");
 ?>
+</head>
+
 
 <body class="d-flex flex-column min-vh-100">
+
+<div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
+  <img class="card-img" src="img/logo.png" alt="Logo" style="width:20%">
+  </div>
+
   <h1>About Webflix</h1>
 
   <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">

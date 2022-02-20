@@ -5,9 +5,9 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' )
   require ('database.php');
   require ('util.php');
   $potentialErrors = array();
-  $comment = validateGet('comment', 'Please give a comment', $potentialErrors, $link);
-  $rating = validateGet('rating', 'Please give a rating', $potentialErrors, $link);
-  $user_id = validateGet('user_id', 'Please give a user_id', $potentialErrors, $link);
+  $comment = confirmGetExistence('comment', $link);
+  $rating = confirmGetExistence('rating',  $link);
+  $user_id = confirmGetExistence('user_id', $link);
   $release_id = htmlspecialchars($_GET["release_id"]);
 
   if(empty($potentialErrors))

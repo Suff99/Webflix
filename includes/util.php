@@ -9,7 +9,7 @@ if (empty($langListFinal)) {
 // Load languages from file
 function loadLangs()
 {
-    $list = [];
+    $list = array();
     $json = file_get_contents("data/langs.json");
     $data  = json_decode($json);
     foreach ($data as &$value) {
@@ -18,17 +18,22 @@ function loadLangs()
     return $list;
 }
 
-function validateGet($value, $error_msg, $errors_array, $sql)
+function backToReadable($content){
+    return json_encode($content, JSON_UNESCAPED_SLASHES);
+}
+
+
+function confirmGetExistence($value, $sql)
 {
-    if (empty($_POST[$value])) {
-        $errors_array[] = $error_msg;
-    } else {
+    if (!empty($_POST[$value])) {
         return mysqli_real_escape_string($sql, trim($_POST[$value]));
     }
     return false;
 }
 
-function addCategory($db, $category_name, $category_description){
+
+function addCategory($db, $category_name, $category_description)
+{
     $addCategoryQuery = "INSERT INTO `wf_categories` (`name`, `description`) VALUES ('$category_name', '$category_description');";
     $result = @mysqli_query($db, $addCategoryQuery);
     if (!$result) {
@@ -41,21 +46,36 @@ function addCategory($db, $category_name, $category_description){
 // Registers a new release 
 function addRelease($db, $date, $release_title, $information_json, $trailer_id, $image_json, $release_type, $watch_link, $categories)
 {
-    $addMovieQuery = "INSERT INTO wf_releases(`title`, `information`, `trailer`, `watch_link`, `date`, `images`, `release_type`, `categories`) VALUES ('$release_title','$information_json','$trailer_id','$watch_link','$date','$image_json','$release_type','$categories')";
-    $result = @mysqli_query($db, $addMovieQuery);
-    if (!$result) {
-        echo "ERROR!</br>";
-        echo "$addMovieQuery</br></br>";
+    $titleToReadable = backToReadable($release_title);
+    $titleLookup = "SELECT release_title FROM wf_releases WHERE title='$titleToReadable'";
+    $results = @mysqli_query($db, $titleLookup);
+    
+    if (mysqli_num_rows($results) == 0) {
+        $addMovieQuery = "INSERT INTO wf_releases(`title`, `information`, `trailer`, `watch_link`, `date`, `images`, `release_type`, `categories`) VALUES ('$release_title','$information_json','$trailer_id','$watch_link','$date','$image_json','$release_type','$categories')";
+        $result = @mysqli_query($db, $addMovieQuery);
+        if (!$result) {
+            echo "ERROR!</br>";
+            echo "$addMovieQuery</br></br>";
+        }
+        return $db->insert_id;
     }
-    return $db->insert_id;
+    
 }
 
 // Should be called within the header of the page, locks out any users that do not have the role "admin"
 function lockPageFromUser()
 {
     if ($_SESSION['role'] != "admin") {
-        header('Location: ' . '403.php');
+        $error403 = array("You do not have permission to access the intended page. (" . getUrl() . ")");
+        header('Location: ' . 'index.php?error=true&dialog=' . json_encode($error403));
     }
+}
+
+function getUrl()
+{
+    $url      = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $validURL = str_replace("&", "&amp;", $url);
+    return $validURL;
 }
 
 // Get the time between the given date and the current date, returns a int saying how many years have passed
@@ -78,15 +98,15 @@ function session()
 // Creates Meta tags based on the given parameters
 function createMetaTags($title, $description, $thumbnail)
 {
-    if(empty($thumbnail)){
+    if (empty($thumbnail)) {
         $thumbnail = "https://craig.software/webflix/img/logo.png";
     }
-    echo '<title>' . $title . '</title>';
-    echo '<meta name="title" content="' . $title . '"/>';
-    echo '<meta name="description" content="' . $description . '"/>';
-    echo '<meta property="og:locale" content="en_GB" />';
-    echo '<meta property="og:image" content="' . $thumbnail . '"/>';
-    echo '<link rel="icon" type="image/png" href="' . $thumbnail . '"/>';
+    echo '<title>' . $title . '</title>'. PHP_EOL;
+    echo '<meta name="title" content="' . $title . '"/>'. PHP_EOL;
+    echo '<meta name="description" content="' . $description . '"/>'. PHP_EOL;
+    echo '<meta property="og:locale" content="en_GB" />'. PHP_EOL;
+    echo '<meta property="og:image" content="' . $thumbnail . '"/>'. PHP_EOL;
+    echo '<link rel="icon" type="image/png" href="' . $thumbnail . '"/>'. PHP_EOL;
 }
 
 function addComment($link, $r_comment, $r_rating, $r_userid, $r_release_id)
@@ -95,17 +115,23 @@ function addComment($link, $r_comment, $r_rating, $r_userid, $r_release_id)
     $result = @mysqli_query($link, $addCommentQ);
 }
 
-function createMovieCard($movie)
+
+function createReleaseCard($movie)
 {
-
-
     echo '
     <div class="col zoom"> <div class="col-sm"> 
-    <div class="card" style="width: 20rem;">';
-    echo '<a data-toggle="collapse" href="#release_' . $movie['id'] . '" role="button" aria-expanded="false" aria-controls="collapse">';
-    echo '<img class="card-img-top" src="' . json_decode($movie['images'])->poster . '" alt="' . $movie['title'] . ' logo"></a>';
+    <div class="card" style="width: 20rem; margin-bottom: 25px;">';
+
+    echo '<a data-toggle="collapse" href="#release_' . $movie['id'] . '" role="button" aria-expanded="false" aria-controls="collapse"><div class="card bg-dark text-white">
+    <img class="card-img" src="' . json_decode($movie['images'])->poster . '" alt="' . $movie['title'] . ' logo">
+    <div class="card-img-overlay">';
+    echo '<h1 class="card-title">' . createMovieBadge($movie) . '</h1>';
+    echo '<i class="' . ($movie['release_type'] == "movie" ? "bi bi-film" : "bi bi-tv-fill") . '" >' . '</i>
+    </div>
+  </div></a>';
+
     echo '<div class="card-body">';
-    echo '<h5 class="card-title">' . $movie['title'] . ' ' . '<i class="' . ($movie['release_type'] == "movie" ? "bi bi-film" : "bi bi-tv-fill") . '" >' . '</i>'  . createMovieBadge($movie) . '</h5>';
+    echo '<h5 class="card-title">' . $movie['title'] . '</h5>';
     echo '<div class="collapse" id="release_' . $movie['id'] . '">';
     echo '<p class="card-text">' . json_decode($movie['information'])->tagline . '</p>';
     echo '<button type="button" class="btn btn-primary video-btn" data-toggle="modal" data-src="https://www.youtube.com/embed/' . $movie['trailer'] . '" data-target="#v_modal">
@@ -144,12 +170,36 @@ function createMovieBadge($movie)
     }
 }
 
-function deleteComment($link, $comm, $user){
+function deleteComment($link, $comm, $user)
+{
     $deleteQuery = "DELETE FROM wf_comments WHERE `comment_id` = $comm AND `user_id` = $user";
-    $result = @mysqli_query ( $link, $deleteQuery ) ;
+    $result = @mysqli_query($link, $deleteQuery);
 }
 
-function deleteCategory($link, $id){
+function deleteCategory($link, $id)
+{
     $deleteQuery = "DELETE FROM `webflix_db`.`wf_categories` WHERE  `id`=$id";
-    $result = @mysqli_query ( $link, $deleteQuery ) ;
+    $result = @mysqli_query($link, $deleteQuery);
 }
+
+
+function handleDialog()
+{
+    $error = "false";
+    if (isset($_GET['dialog'])) {
+        $messages = json_decode($_GET['dialog']);
+
+        if (isset($_GET['error'])) {
+            $error = $_GET['error'];
+        }
+
+        echo '<div class="alert ' .  (($error == 'true') ? 'alert-danger"' : "alert-success")  . ' alert-dismissable">
+      <h4 class="alert-heading">' .  (($error == 'true') ? 'Failed!' : "Success")  . '</h4>
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>';
+        foreach ($messages as $msg) {
+            echo "$msg";
+        }
+        echo "</div>";
+    }
+}
+

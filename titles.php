@@ -3,8 +3,6 @@
 
 <head>
   <?php
-  require('includes/header.php');
-
   $currentPage = 0;
 
   if (!isset($_GET['page'])) {
@@ -39,7 +37,7 @@
 
   $movies = mysqli_query($link, $moviesQuery);
   $number_of_result = mysqli_num_rows($movies);
-  $results_per_page = 21;
+  $results_per_page = 24;
   $number_of_page = ceil($number_of_result / $results_per_page);
   $page_first_result = ($currentPage - 1) * $results_per_page;
 
@@ -53,23 +51,35 @@
 </head>
 
 <body>
-  <div class="container">
+  <div class="container-fluid">
+
+    <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
+      <img class="card-img" src="img/logo.png" alt="Logo" style="width:20%">
+    </div>
 
     <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
       <h1>What's on?</h1>
       </p>
     </div>
 
-    <form>
-      <input type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-primary" type="submit">Search</button>
-    </form>
+    <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
+    <form action="search.php" method="post" class="alert-dismissible fade show" role="alert">
+        <div class="input-group">
+          <div class="form-outline">
+          <input id="search" name="search" type="text" class="form-control" required="required">
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Search
+          </button>
+        </div>
+      </form> <br>
+    </div>
 
-    <div class="row">
+    <div class="row justify-content-center align-items-center mx-0 px-0 text-black">
 
       <?php
       while ($row = mysqli_fetch_array($result)) {
-        createMovieCard($row);
+        createReleaseCard($row);
       }
       ?>
 
@@ -118,11 +128,12 @@
     <ul class="pagination">
       <?php
       for ($page = 1; $page <= $number_of_page; $page++) {
-        echo '<li class="page-item' . (($page == $currentPage) ? ' active' : "") . '"><a class="page-link" href="titles.php?page=' . $page . '&type=' . $_GET['type'] . '">' . $page . '</a></li>';
+        echo '<li class="page-item' . (($page == $currentPage) ? ' active' : "") . '"><a class="page-link" href="titles.php?page=' . $page . '&type=' . ((isset($_GET['type'])) ? $_GET['type'] : "") . '">' . $page . '</a></li>';
       }
       ?>
     </ul>
   </nav>
+  <br><br><br>  <br><br><br>
 
   <?php
   require('includes/footer.php');

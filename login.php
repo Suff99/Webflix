@@ -1,11 +1,5 @@
 <!doctype html>
 <html lang="en">
-
-<head>
-    <?php
-    require('includes/header.php');
-    ?>
-</head>
 <?php
 $identifier = "login";
 require('includes/database.php');
@@ -84,9 +78,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <div class="container">
 
-    <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
-    <p> <h1>Login</h1></p>
-  </div>
+        <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
+            <img class="card-img" src="img/logo.png" alt="Logo" style="width:20%">
+        </div>
+
+        <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
+            <p>
+            <h1>Login</h1>
+            </p>
+        </div>
 
         <div class="row">
             <div class="col-sm">

@@ -3,19 +3,29 @@
 
 <head>
   <?php
-  require('includes/header.php');
   $identifier = "admin";
   require('includes/database.php');
   require('includes/nav.php');
   createMetaTags("Admin Panel", "Admin Panel", "");
+  lockPageFromUser();
   ?>
 
 </head>
 <h1>Admin Panel</h1>
 
+
+
 <body>
 
+  <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
+
+    <img class="card-img" src="img/logo.png" alt="Logo" style="width:20%">
+  </div>
+
   <div class="container">
+
+
+
     <h1>Titles</h1>
     <div class="row">
       <div class="col-sm-6">
@@ -44,7 +54,7 @@
     <div class="row">
       <div class="col-sm-6">
         <div class="card">
-        <div class="card-body">
+          <div class="card-body">
             <h5 class="card-title">Add Category</h5>
             <p class="card-text">Register a new category</p>
             <button data-toggle="modal" data-target="#category_modal" class="btn btn-primary">Go</button>
@@ -79,23 +89,23 @@
           </button>
         </div>
         <div class="modal-body">
-        <ul class="list-group text-black">
-          <?php
-          $queryCategories = "SELECT * FROM `wf_categories`;";
-          $result = @mysqli_query($link, $queryCategories);
-          while ($category = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-           echo '<li class="list-group-item"><p class="card-text">'.$category['name'];
-           echo '<a href="includes/delete_category.php?category_id='.$category['id'].'">&nbsp;&nbsp;<i class="bi bi-trash-fill" style="color:black;"></i></p></a>';
-           echo '</li>';
-          }
-          ?>
+          <ul class="list-group text-black">
+            <?php
+            $queryCategories = "SELECT * FROM `wf_categories`;";
+            $result = @mysqli_query($link, $queryCategories);
+            while ($category = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+              echo '<li class="list-group-item"><p class="card-text">' . $category['name'];
+              echo '<a href="includes/delete_category.php?category_id=' . $category['id'] . '">&nbsp;&nbsp;<i class="bi bi-trash-fill" style="color:black;"></i></p></a>';
+              echo '</li>';
+            }
+            ?>
           </ul>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
-  </div>
   </div>
 
   <!-- Category Add Modal -->

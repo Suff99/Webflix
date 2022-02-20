@@ -1,23 +1,19 @@
 <?php
 
 
-  require ('database.php');
-  require ('util.php');
-  $potentialErrors = array();
-  $category_id = htmlspecialchars($_GET["category_id"]);
+require('database.php');
+require('util.php');
+$dialogMessage = array();
+$category_id = confirmGetExistence('category_id',  $link);
 
-  if(empty($potentialErrors))
-  {
-    deleteCategory($link, $category_id);
-    header('Location: '. '../admin.php');
-  }
-  else 
-  {
-    echo '<div class="alert alert-warning" role="alert">
-    <h4 class="alert-heading">Error!</h4>' ;
-    foreach ( $potentialErrors as $msg )
-    { echo "- $msg<br>" ; }
-    echo 'Please try again.</p></div>';
-    mysqli_close( $link );
-  } 
+if (!$category_id) {
+  array_push($dialogMessage, "Missing category id!");
+}
 
+if (empty($dialogMessage)) {
+  array_push($dialogMessage, "Deleted Category: $category");
+  deleteCategory($link, $category_id);
+  header('Location: ' . '../admin.php?error=false&dialog=' . json_encode($dialogMessage));
+} else {
+  header('Location: ' . '../admin.php?error=true&dialog=' . json_encode($dialogMessage));
+}

@@ -4,6 +4,10 @@
 include('includes/util.php');
 include('includes/database.php');
 
+
+$sql = "Truncate wf_comments; Truncate wf_releases;;";
+$result = @mysqli_query ( $link, $sql ) ;
+
 addMovies($link, 20);
 addTvsShows($link, 20);
 
@@ -46,7 +50,8 @@ function addMovies($link, $pages){
         $information = array(
           "tagline" => $tvShow->tagline,
           "description" => $value->overview,
-          "languages" => $spoken_languages
+          "languages" => $spoken_languages,
+          "runtime" => $tvShow->runtime . " Minutes"
         );
   
         $images = array(
@@ -75,12 +80,12 @@ function addMovies($link, $pages){
        }
   
         if($youtube_id != ""){
-        $rel = addRelease($link, $value->release_date, $value->original_title, json_encode($information), $youtube_id, json_encode($images), "movie", $tvShow->homepage, json_encode($categoryIds));
+        $rel = addRelease($link, $value->release_date, mysqli_real_escape_string($link, $value->title), json_encode($information), $youtube_id, json_encode($images), "movie", $tvShow->homepage, json_encode($categoryIds));
         if($rel > 0){
         fakeReviews($link,$value->id, "movie", $rel); 
         }
     } else {
-          printf("<p>Skipped $value->original_title</p>");
+          printf("<p>Skipped $value->title</p>");
         }
       }
     }
@@ -119,9 +124,10 @@ function addMovies($link, $pages){
       }
   
         $information = array(
-          "tagline" => $value->overview,
-          "description" => $value->overview,
-          "languages" => $spoken_languages
+          "tagline" => utf8_encode($value->overview),
+          "description" => utf8_encode($value->overview),
+          "languages" => $spoken_languages,
+          "runtime" => $tvShow->number_of_seasons . " Seasons"
       );
   
         $images = array(
@@ -151,7 +157,7 @@ function addMovies($link, $pages){
      }
   
         if($youtube_id != ""){
-        $rel = addRelease($link, $value->first_air_date, $value->name, json_encode($information), $youtube_id, json_encode($images), "series", $tvShow->homepage, json_encode($categoryIds));
+        $rel = addRelease($link, $value->first_air_date, mysqli_real_escape_string($link, $value->name), json_encode($information), $youtube_id, json_encode($images), "series", $tvShow->homepage, json_encode($categoryIds));
         if($rel > 0){
           fakeReviews($link,$value->id, "series", $rel); 
           }
@@ -187,3 +193,4 @@ function getBackDrop($api_id, $type){
   $data  = json_decode($url);
   return "https://image.tmdb.org/t/p/w300_and_h450_bestv2" .$data->backdrop_path;
 }
+
