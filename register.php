@@ -2,7 +2,9 @@
 <html lang="en">
 
 <body class="d-flex flex-column min-vh-100">
-  <?php
+
+
+    <?php
   $identifier = "login";
   require('includes/database.php');
   require('includes/nav.php');
@@ -22,6 +24,40 @@
     $password = confirmGetExistence('password',  $link);
     $dob = confirmGetExistence('dob', $link);
     $contact = confirmGetExistence('contact', $link);
+
+    if (!$contact) {
+      $potentialErrors[] = 'Please give a valid mobile number';
+    }
+
+    if (!$dob) {
+      $potentialErrors[] = 'Please give a date of birth';
+    }
+
+    if (!$password) {
+      $potentialErrors[] = 'Please give a password';
+    }
+
+    if (!$password_validate) {
+      $potentialErrors[] = 'Please re-enter password for confirmation';
+    }
+
+    if (!$email) {
+      $potentialErrors[] = 'Please enter your email';
+    }
+
+    if (!$userName) {
+      $potentialErrors[] = 'Please give a username';
+    }
+
+    if (!$first_name || !$last_name) {
+      $potentialErrors[] = 'Please enter both name fields';
+    }
+
+    $recaptcha = confirmGetExistence('g-recaptcha-response', $link);
+    $res = reCaptcha($recaptcha);
+    if (!$res['success']) {
+      $potentialErrors[] = 'Please complete the captcha';
+    }
 
     $userAge = calculateAge($dob);
     if ($userAge < 13) {
@@ -57,15 +93,8 @@
 
     if (empty($potentialErrors)) {
       addUser($link, $email, $userName,  $first_name, $last_name, $password, $dob, $contact);
-      //header("Refresh:0");
+      header('Location: ' . "register.php?&dialog=" . json_encode($potentialErrors));
     } else {
-      echo '<div class="alert alert-warning" role="alert">
-    <h4 class="alert-heading">Error!</h4>';
-      foreach ($potentialErrors as $msg) {
-        echo "- $msg<br>";
-      }
-      echo 'Please try again.</p></div>';
-      mysqli_close($link);
     }
   }
 
@@ -77,94 +106,99 @@
   ?>
 
 
-  <script>
-  createDatePicker("#dob");
-  </script>
+    <script>
+    createDatePicker("#dob");
+    </script>
 
 
-  <div class="container">
-  <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
-  <img class="card-img" src="img/logo.png" alt="Logo" style="width:20%">
-  </div>
-    <h1>Register</h1>
-    <form action="register.php" class="row g-3" method="post" class="alert-dismissible fade show" role="alert">
-      <div class="col-md-4">
-        <label for="validationDefault01" class="form-label">First name</label>
-        <input id="first_name" name="first_name" type="text" class="form-control" required>
-      </div>
-      <div class="col-md-4">
-        <label for="validationDefault02" class="form-label">Last name</label>
-        <input id="last_name" name="last_name" type="text" required="required" class="form-control" required>
-      </div>
-      <div class="col-md-4">
-        <label for="validationDefaultUsername" class="form-label">Username</label>
-        <div class="input-group">
-          <span class="input-group-text">@</span>
-          <input type="text" class="form-control" name="username" id="username" aria-describedby="inputGroupPrepend2" required>
+    <div class="container">
+        <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
         </div>
-      </div>
+        <h1>Register</h1>
+        <form action="register.php" class="row g-3" method="post" class="alert-dismissible fade show" role="alert">
+            <div class="col-md-4">
+                <label for="validationDefault01" class="form-label">First name</label>
+                <input id="first_name" name="first_name" type="text" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <label for="validationDefault02" class="form-label">Last name</label>
+                <input id="last_name" name="last_name" type="text" required="required" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+                <label for="validationDefaultUsername" class="form-label">Username</label>
+                <div class="input-group">
+                    <span class="input-group-text">@</span>
+                    <input type="text" class="form-control" name="username" id="username"
+                        aria-describedby="inputGroupPrepend2" required>
+                </div>
+            </div>
 
-      <div class="col-md-4">
-        <label for="validationDefault03" class="form-label">Date Of Birth</label>
-        <div class="input-group">
-          <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-          <input id="dob" name="dob" type="text" class="form-control" aria-describedby="dobBlock" readonly="readonly" required>
-        </div>
-      </div>
+            <div class="col-md-4">
+                <label for="validationDefault03" class="form-label">Date Of Birth</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                    <input id="dob" name="dob" type="text" class="form-control" aria-describedby="dobBlock"
+                        readonly="readonly" required>
+                </div>
+            </div>
 
-      <div class="col-md-4">
-        <label for="validationDefault03" class="form-label">Contact Number</label>
-        <div class="input-group">
-          <span class="input-group-text"><i class="bi bi-phone-fill"></i></span>
-          <input type="text" name="contact" id="contact" required="required" pattern="^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$" title="Please enter a valid UK Number beginning with 0" class="form-control">
-        </div>
-      </div>
+            <div class="col-md-4">
+                <label for="validationDefault03" class="form-label">Contact Number</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-phone-fill"></i></span>
+                    <input type="text" name="contact" id="contact" required="required"
+                        pattern="^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$"
+                        title="Please enter a valid UK Number beginning with 0" class="form-control">
+                </div>
+            </div>
 
-      <div class="col-md-4">
-        <label for="validationDefault03" class="form-label">Email</label>
-        <div class="input-group">
-          <span class="input-group-text"><i class="fa fa-envelope"></i></span>
-          <input id="email" name="email" placeholder="example@example.com" type="email" required="required" class="form-control" value="<?php if (isset($_POST['email'])) echo $_POST['email']; ?>">
-        </div>
-      </div>
+            <div class="col-md-4">
+                <label for="validationDefault03" class="form-label">Email</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                    <input id="email" name="email" placeholder="example@example.com" type="email" required="required"
+                        class="form-control" value="<?php if (isset($_POST['email'])) echo $_POST['email']; ?>">
+                </div>
+            </div>
 
-      <div class="col-md-7">
-        <label for="validationDefault03" class="form-label">Password</label>
-        <div class="input-group">
-          <span class="input-group-text"><i class="fa fa-envelope"></i></span>
-          <input id="password" name="password" placeholder="Password" type="password" required="required" class="form-control" value="<?php if (isset($_POST['password'])) echo $_POST['password']; ?>">
-        </div>
-      </div>
+            <div class="col-md-4">
+                <label for="validationDefault03" class="form-label">Password</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                    <input id="password" name="password" placeholder="Password" type="password" required="required"
+                        class="form-control" value="<?php if (isset($_POST['password'])) echo $_POST['password']; ?>">
+                </div>
+            </div>
 
-      <div class="col-md-7">
-        <label for="validationDefault03" class="form-label">Password (Re-Enter)</label>
-        <div class="input-group">
-          <span class="input-group-text"><i class="fa fa-envelope"></i></span>
-          <input id="password_validate" name="password_validate" placeholder="Validate Password" type="password" required="required" class="form-control" value="<?php if (isset($_POST['password_validate'])) echo $_POST['password_validate']; ?>">
-        </div>
-      </div>
+            <div class="col-md-4">
+                <label for="validationDefault03" class="form-label">Password (Re-Enter)</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                    <input id="password_validate" name="password_validate" placeholder="Validate Password"
+                        type="password" required="required" class="form-control"
+                        value="<?php if (isset($_POST['password_validate'])) echo $_POST['password_validate']; ?>">
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-check"><br>
+                    <div class="g-recaptcha brochure__form__captcha"
+                        data-sitekey="6LfoXZYeAAAAALxcnCubhjJfFxq4laklzjSegYR6"></div>
 
-      <div class="col-12">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
-          <label class="form-check-label" for="invalidCheck2">
-            Agree to terms and conditions
-          </label>
-        </div>
-      </div>
-      <div class="col-12">
-        <button name="submit" type="submit" class="btn btn-primary">Register</button>
-      </div>
-    </form>
-  </div>
-
-
-
-
-
-
+                </div>
+            </div>
+            <div class="col-12">
+                <button name="submit" type="submit" class="btn btn-primary">Register</button>
+            </div>
+        </form>
+    </div>
 
 
-  <?php
+
+
+
+
+
+
+    <?php
   require('includes/footer.php');
   ?>

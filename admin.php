@@ -16,16 +16,7 @@
 
 
 <body>
-
-  <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
-
-    <img class="card-img" src="img/logo.png" alt="Logo" style="width:20%">
-  </div>
-
   <div class="container">
-
-
-
     <h1>Titles</h1>
     <div class="row">
       <div class="col-sm-6">

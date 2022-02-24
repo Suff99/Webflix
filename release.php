@@ -21,17 +21,16 @@
         $identifier = 'release';
         require('includes/nav.php');
         session();
-        createMetaTags($movie['title'], json_decode($movie['information'])->tagline, json_decode($movie['images'])->poster);
-
+        if (isset($movie)) {
+            createMetaTags($movie['title'], $movie['tagline'], json_decode($movie['images'])->poster);
+        } else {
+            createMetaTags("Title not found!", "Title not found!", "");
+        }
         ?>
     </div>
     </head>
 
     <br><br>
-
-    <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
-        <img class="card-img" src="img/logo.png" alt="Logo" style="width:20%">
-    </div>
 
     <h1 style="<?php echo (empty($movie) ? '' : 'display: none') ?>">Aw Snap!</h1>
     <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black" style="<?php echo (empty($movie) ? '' : 'display: none') ?>">
@@ -46,9 +45,9 @@
     }
     ?>
 
-    <h1><?php echo $movie['title'] ?></h1>
-
+    <br><br><br><br><br>
     <div class="row text-left justify-content-center align-items-left mx-0 px-0 text-black" style="<?php echo (!empty($movie) ? '' : 'display: none') ?>">
+
         <div class="jumbotron" style="width: 80%">
 
             <div class="container">
@@ -60,7 +59,8 @@
 
 
                     <div class="col">
-                        <p class="card-text"><?php echo json_decode($movie['information'])->description ?></p>
+                        <h1><?php echo $movie['title'] ?></h1>
+                        <p class="card-text"><?php echo $movie['description'] ?></p>
                         <div class="yt_container"><iframe class="responsive-iframe" width="560" height="315" src="https://www.youtube.com/embed/<?php echo $movie['trailer']; ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 
                         <br>
@@ -73,7 +73,7 @@
                                     <th scope="row">Supported Languages</th>
                                     <?php
                                     $langString = "";
-                                    $langs = json_decode($movie['information'])->languages;
+                                    $langs = json_decode($movie['addtional_info'])->languages;
                                     foreach ($langs as $lang) {
                                         $langString .= $lang . " ";
                                     }
@@ -104,7 +104,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Duration</th>
-                                    <td> <?php echo json_decode($movie['information'])->runtime ?>
+                                    <td> <?php echo json_decode($movie['addtional_info'])->runtime ?>
                                     </td>
                                 </tr>
                                 <tr>
@@ -121,6 +121,19 @@
                                 </tr>
                             </tbody>
                         </table>
+
+
+                        <div class="container text-center justify-content-center align-items-center text-black">
+                            <?php
+
+                            if (isset($_SESSION['role'])) {
+                                if (strcmp($_SESSION['role'], "admin") == 0) {
+                                    echo '<p> Admin Zone </p> <br>
+                                <button class="btn btn-primary" href="includes/delete_title.php?release=' . $id . '"><i class="bi bi-trash-fill"></i> Delete Title</button>';
+                                }
+                            }
+                            ?>
+                        </div>
 
 
                     </div>
@@ -182,7 +195,7 @@
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
             const id = urlParams.get('id')
-            shareOnFace(id);
+            shareOnFacebook(id);
         });
     </script>
 
@@ -225,13 +238,13 @@
           <p>' . $comment['message'] . '</p>
         </blockquote>
         <figcaption class="blockquote-footer mb-0 text-muted">
-              @' . $comment['username'] . '</cite> ';
-                 
-                if(isset($_SESSION['user_id'])) {
-                if ($comment['user_id'] == $_SESSION['user_id']) {
-                    echo '<a class="nav-link text-black" href="includes/delete_comment.php?release=' . $id . '&comment=' . $comment['comment_id'] . '"><i class="bi bi-trash-fill"></i> Delete</a>';
+              @' . $comment['username'] . '</cite> <br><br>';
+
+                if (isset($_SESSION['user_id'])) {
+                    if ($comment['user_id'] == $_SESSION['user_id']) {
+                        echo '<a href="includes/delete_comment.php?release=' . $id . '&comment=' . $comment['comment_id'] . '"> <button class="btn btn-primary"> <i class="bi bi-trash-fill"></i> Delete</button></a>';
+                    }
                 }
-            }
 
                 echo '</figcaption>
       </figure>
@@ -260,7 +273,7 @@
     </div>
 
 
-    
+
     </div>
     <?php
     require('includes/footer.php');

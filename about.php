@@ -14,14 +14,10 @@ createMetaTags("About", "About", "");
 
 <body class="d-flex flex-column min-vh-100">
 
-<div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
-  <img class="card-img" src="img/logo.png" alt="Logo" style="width:20%">
-  </div>
-
   <h1>About Webflix</h1>
 
   <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
-    <p> Under Construction </p>
+    <p> Under Construction</p>
   </div>
 
   <?php

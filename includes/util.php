@@ -10,7 +10,7 @@ if (empty($langListFinal)) {
 function loadLangs()
 {
     $list = array();
-    $json = file_get_contents("data/langs.json");
+    $json = file_get_contents("https://craig.software/webflix/data/langs.json");
     $data  = json_decode($json);
     foreach ($data as &$value) {
         array_push($list, $value);
@@ -18,7 +18,8 @@ function loadLangs()
     return $list;
 }
 
-function backToReadable($content){
+function backToReadable($content)
+{
     return json_encode($content, JSON_UNESCAPED_SLASHES);
 }
 
@@ -28,7 +29,20 @@ function confirmGetExistence($value, $sql)
     if (!empty($_POST[$value])) {
         return mysqli_real_escape_string($sql, trim($_POST[$value]));
     }
+
+    if (!empty($_GET[$value])) {
+        return mysqli_real_escape_string($sql, trim($_GET[$value]));
+    }
+
     return false;
+}
+
+
+function addComment($link, $r_comment, $r_rating, $r_userid, $r_release_id)
+{
+    $addCommentQ = "INSERT INTO `wf_comments` (`message`, `rating`, `release_id`, `user_id`, `date`) VALUES ('$r_comment', '$r_rating', '$r_release_id', '$r_userid', now());";
+    printf($addCommentQ);
+    $result = @mysqli_query($link, $addCommentQ);
 }
 
 
@@ -44,14 +58,15 @@ function addCategory($db, $category_name, $category_description)
 }
 
 // Registers a new release 
-function addRelease($db, $date, $release_title, $information_json, $trailer_id, $image_json, $release_type, $watch_link, $categories)
+function addRelease($db, $date, $release_title, $addtional_info_json, $trailer_id, $image_json, $release_type, $watch_link, $categories)
 {
-    $titleToReadable = backToReadable($release_title);
-    $titleLookup = "SELECT release_title FROM wf_releases WHERE title='$titleToReadable'";
+    $titleLookup = "SELECT title FROM wf_releases WHERE title='$release_title'";
     $results = @mysqli_query($db, $titleLookup);
-    
+
+    if (!$results) return false;
+
     if (mysqli_num_rows($results) == 0) {
-        $addMovieQuery = "INSERT INTO wf_releases(`title`, `information`, `trailer`, `watch_link`, `date`, `images`, `release_type`, `categories`) VALUES ('$release_title','$information_json','$trailer_id','$watch_link','$date','$image_json','$release_type','$categories')";
+        $addMovieQuery = "INSERT INTO wf_releases(`title`, `addtional_info`, `trailer`, `watch_link`, `date`, `images`, `release_type`, `categories`) VALUES ('$release_title','$addtional_info_json','$trailer_id','$watch_link', STR_TO_DATE('$date','%d-%m-%Y'),'$image_json','$release_type','$categories')";
         $result = @mysqli_query($db, $addMovieQuery);
         if (!$result) {
             echo "ERROR!</br>";
@@ -59,14 +74,14 @@ function addRelease($db, $date, $release_title, $information_json, $trailer_id, 
         }
         return $db->insert_id;
     }
-    
 }
+
 
 // Should be called within the header of the page, locks out any users that do not have the role "admin"
 function lockPageFromUser()
 {
-    if ($_SESSION['role'] != "admin") {
-        $error403 = array("You do not have permission to access the intended page. (" . getUrl() . ")");
+    if (strcmp($_SESSION['role'], "admin") != 0) {
+        $error403 = array("You do not have permission to access the intended page.");
         header('Location: ' . 'index.php?error=true&dialog=' . json_encode($error403));
     }
 }
@@ -101,18 +116,12 @@ function createMetaTags($title, $description, $thumbnail)
     if (empty($thumbnail)) {
         $thumbnail = "https://craig.software/webflix/img/logo.png";
     }
-    echo '<title>' . $title . '</title>'. PHP_EOL;
-    echo '<meta name="title" content="' . $title . '"/>'. PHP_EOL;
-    echo '<meta name="description" content="' . $description . '"/>'. PHP_EOL;
-    echo '<meta property="og:locale" content="en_GB" />'. PHP_EOL;
-    echo '<meta property="og:image" content="' . $thumbnail . '"/>'. PHP_EOL;
-    echo '<link rel="icon" type="image/png" href="' . $thumbnail . '"/>'. PHP_EOL;
-}
-
-function addComment($link, $r_comment, $r_rating, $r_userid, $r_release_id)
-{
-    $addCommentQ = "INSERT INTO `wf_comments` (`message`, `rating`, `release_id`, `user_id`, `date`) VALUES ('$r_comment', '$r_rating', '$r_release_id', '$r_userid', now());";
-    $result = @mysqli_query($link, $addCommentQ);
+    echo '<title>' . $title . '</title>' . PHP_EOL;
+    echo '<meta name="title" content="' . $title . '"/>' . PHP_EOL;
+    echo '<meta name="description" content="' . $description . '"/>' . PHP_EOL;
+    echo '<meta property="og:locale" content="en_GB" />' . PHP_EOL;
+    echo '<meta property="og:image" content="' . $thumbnail . '"/>' . PHP_EOL;
+    echo '<link rel="icon" type="image/png" href="' . $thumbnail . '"/>' . PHP_EOL;
 }
 
 
@@ -123,7 +132,7 @@ function createReleaseCard($movie)
     <div class="card" style="width: 20rem; margin-bottom: 25px;">';
 
     echo '<a data-toggle="collapse" href="#release_' . $movie['id'] . '" role="button" aria-expanded="false" aria-controls="collapse"><div class="card bg-dark text-white">
-    <img class="card-img" src="' . json_decode($movie['images'])->poster . '" alt="' . $movie['title'] . ' logo">
+    <img class="card-img" src="' . json_decode($movie['images'])->poster . '" alt="' . $movie['title'] . ' logo" height="50%">
     <div class="card-img-overlay">';
     echo '<h1 class="card-title">' . createMovieBadge($movie) . '</h1>';
     echo '<i class="' . ($movie['release_type'] == "movie" ? "bi bi-film" : "bi bi-tv-fill") . '" >' . '</i>
@@ -133,7 +142,7 @@ function createReleaseCard($movie)
     echo '<div class="card-body">';
     echo '<h5 class="card-title">' . $movie['title'] . '</h5>';
     echo '<div class="collapse" id="release_' . $movie['id'] . '">';
-    echo '<p class="card-text">' . json_decode($movie['information'])->tagline . '</p>';
+    echo '<p class="card-text">' . $movie['tagline']. '</p>';
     echo '<button type="button" class="btn btn-primary video-btn" data-toggle="modal" data-src="https://www.youtube.com/embed/' . $movie['trailer'] . '" data-target="#v_modal">
     Trailer
   </button>';
@@ -141,6 +150,12 @@ function createReleaseCard($movie)
     echo '</div>';
 
     echo '</div></div></div></div> </br></br></br></br></br></br>';
+}
+
+function makeReadable($text)
+{
+    $fixed = str_replace("&quot", "'", $text);
+    return htmlspecialchars($fixed);
 }
 
 function noNewReleases($db_link)
@@ -193,7 +208,7 @@ function handleDialog()
             $error = $_GET['error'];
         }
 
-        echo '<div class="alert ' .  (($error == 'true') ? 'alert-danger"' : "alert-success")  . ' alert-dismissable">
+        echo '<br><br><br><div class="alert ' .  (($error == 'true') ? 'alert-danger"' : "alert-success")  . ' alert-dismissable">
       <h4 class="alert-heading">' .  (($error == 'true') ? 'Failed!' : "Success")  . '</h4>
       <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>';
         foreach ($messages as $msg) {
@@ -203,3 +218,47 @@ function handleDialog()
     }
 }
 
+function deleteTitle($link, $id)
+{
+    $deleteQuery = "DELETE FROM `webflix_db`.`wf_releases` WHERE  `id`=$id";
+    $result = @mysqli_query($link, $deleteQuery);
+    deleteCommentsFromTitle($link, $id);
+}
+
+function getTitleFromId($link, $id)
+{
+    $select = "SELECT * FROM `wf_releases` WHERE `id` =$id";
+    $result = @mysqli_query($link, $select);
+    return $result->fetch_row();
+}
+
+function getCategoryFromId($link, $id)
+{
+    $select = "SELECT * FROM `wf_categories` WHERE `id` =$id";
+    $result = @mysqli_query($link, $select);
+    return $result->fetch_row();
+}
+
+function deleteCommentsFromTitle($link, $id)
+{
+    $delComment = "DELETE FROM `webflix_db`.`wf_comments` WHERE  `release_id`=$id";
+    $result = @mysqli_query($link, $delComment);
+}
+
+
+function reCaptcha($recaptcha){
+    $secret = "6LfoXZYeAAAAAKwjOyHlzQoKrOoI9FGjUr2v78vW";
+    $ip = $_SERVER['REMOTE_ADDR'];
+  
+    $postvars = array("secret"=>$secret, "response"=>$recaptcha, "remoteip"=>$ip);
+    $url = "https://www.google.com/recaptcha/api/siteverify";
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $postvars);
+    $data = curl_exec($ch);
+    curl_close($ch);
+  
+    return json_decode($data, true);
+  }

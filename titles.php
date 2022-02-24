@@ -45,8 +45,6 @@
   $result = mysqli_query($link, $query);
 
   createMetaTags($title, "Look at our large collection of titles! Available for streaming now!", "");
-
-
   ?>
 </head>
 
@@ -54,15 +52,11 @@
   <div class="container-fluid">
 
     <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
-      <img class="card-img" src="img/logo.png" alt="Logo" style="width:20%">
-    </div>
-
-    <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
       <h1>What's on?</h1>
       </p>
     </div>
 
-    <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
+    <div class="row text-right justify-content-right align-items-right mx-0 px-0 text-black">
     <form action="search.php" method="post" class="alert-dismissible fade show" role="alert">
         <div class="input-group">
           <div class="form-outline">

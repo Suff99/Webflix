@@ -3,16 +3,19 @@
 
 require('database.php');
 require('util.php');
-$dialogMessage = array();
-$category_id = confirmGetExistence('category_id',  $link);
+session();
+lockPageFromUser();
 
-if (!$category_id) {
-  array_push($dialogMessage, "Missing category id!");
+$dialogMessage = array();
+$release = confirmGetExistence('release',  $link);
+
+if (!$release) {
+  array_push($dialogMessage, "Missing release id!");
 }
 
 if (empty($dialogMessage)) {
-  array_push($dialogMessage, "Deleted Category: ". getCategoryFromId($link, $category_id)['name']);
-  deleteCategory($link, $category_id);
+  array_push($dialogMessage, "Deleted Title:" . getTitleFromId($link, $release)['title']);
+  deleteTitle($link, $release);
   header('Location: ' . '../admin.php?error=false&dialog=' . json_encode($dialogMessage));
 } else {
   header('Location: ' . '../admin.php?error=true&dialog=' . json_encode($dialogMessage));

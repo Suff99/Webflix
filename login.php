@@ -57,12 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header('Location: ' . $prev_url);
     } else {
         $errors = $data;
-        echo '<div class="alert alert-warning" role="alert">
-       <h4 class="alert-heading">Error!</h4>';
-        foreach ($errors as $msg) {
-            echo "- $msg<br>";
-        }
-        echo 'Please try again.</p></div>';
+        header('Location: ' . $prev_url . "?dialog=" . json_encode($errors) . "&error=true");
     }
 }
 
@@ -77,10 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </style>
 
     <div class="container">
-
-        <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
-            <img class="card-img" src="img/logo.png" alt="Logo" style="width:20%">
-        </div>
 
         <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
             <p>

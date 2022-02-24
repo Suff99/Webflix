@@ -12,11 +12,7 @@
 </head>
 
 <body>
-    <div class="container">
-
-        <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
-            <img class="card-img" src="img/logo.png" alt="Logo" style="width:20%">
-        </div>
+    <div class="container-fluid">
 
         <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
             <h1>What's on?</h1>
@@ -27,7 +23,7 @@
             <form action="search.php" method="post" class="alert-dismissible fade show" role="alert">
                 <div class="input-group">
                     <div class="form-outline">
-                    <input id="search" name="search" type="text" class="form-control" required="required">
+                        <input id="search" name="search" type="text" class="form-control" required="required">
                     </div>
                     <button type="submit" class="btn btn-primary">
                         Search
@@ -48,14 +44,14 @@
                 $result = mysqli_query($link, $searchResult);
 
 
-                if(mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_array($result)) {
-                    createReleaseCard($row);
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_array($result)) {
+                        createReleaseCard($row);
+                    }
+                } else {
+                    echo 'No results found for ' . $search;
                 }
-            } else {
-                echo 'No results found for ' . $search;
             }
-        }
             ?>
 
         </div>
