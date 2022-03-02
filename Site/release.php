@@ -109,7 +109,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Watch</th>
-                                    <td> <?php echo '<a style="color: #2c0a0a;" href="' . empty($movie['watch_link']) ? "Coming soon" : $movie['watch_link'] . '">' . $movie['watch_link'] . '</a>' ?>
+                                    <td> <?php echo '<a style="color: #2c0a0a;" href="' . (empty($movie['watch_link']) ? "Coming soon" : $movie['watch_link']) . '">' . $movie['watch_link'] . '</a>' ?>
                                     </td>
                                 </tr>
                                 <tr>

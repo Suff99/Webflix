@@ -1,4 +1,4 @@
-# Hide Login Details
-includes/database.php
 
-.vscode/sftp.json
+includes/database.php
+Site/includes/nav_newish.php
+Tests/node_modules/

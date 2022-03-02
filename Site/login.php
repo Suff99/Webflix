@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <label class="form-label">Password</label>
                         <input type="password" class="form-control" name="password" placeholder="Password">
                     </div>
-                    <button type="submit" class="btn btn-primary" value="Login">Sign in</button>
+                    <button name="login" type="submit" class="btn btn-primary" value="Login">Sign in</button>
                     <button type="button" class="btn btn-primary" onclick="window.location.href='register.php';">Register</button>
                 </form>
             </div>

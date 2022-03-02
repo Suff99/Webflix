@@ -146,7 +146,7 @@ function createReleaseCard($movie)
     echo '<button type="button" class="btn btn-primary video-btn" data-toggle="modal" data-src="https://www.youtube.com/embed/' . $movie['trailer'] . '" data-target="#v_modal">
     Trailer
   </button>';
-    echo '  <a href="release.php?id=' . $movie['id'] . '" class="btn btn-primary">More Info</a>';
+    echo '  <a name="info" href="release.php?id=' . $movie['id'] . '" class="btn btn-primary">More Info</a>';
     echo '</div>';
 
     echo '</div></div></div></div> </br></br></br></br></br></br>';
@@ -244,21 +244,3 @@ function deleteCommentsFromTitle($link, $id)
     $delComment = "DELETE FROM `webflix_db`.`wf_comments` WHERE  `release_id`=$id";
     $result = @mysqli_query($link, $delComment);
 }
-
-
-function reCaptcha($recaptcha){
-    $secret = "6LfoXZYeAAAAAKwjOyHlzQoKrOoI9FGjUr2v78vW";
-    $ip = $_SERVER['REMOTE_ADDR'];
-  
-    $postvars = array("secret"=>$secret, "response"=>$recaptcha, "remoteip"=>$ip);
-    $url = "https://www.google.com/recaptcha/api/siteverify";
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $postvars);
-    $data = curl_exec($ch);
-    curl_close($ch);
-  
-    return json_decode($data, true);
-  }

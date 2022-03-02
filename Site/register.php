@@ -53,12 +53,6 @@
       $potentialErrors[] = 'Please enter both name fields';
     }
 
-    $recaptcha = confirmGetExistence('g-recaptcha-response', $link);
-    $res = reCaptcha($recaptcha);
-    if (!$res['success']) {
-      $potentialErrors[] = 'Please complete the captcha';
-    }
-
     $userAge = calculateAge($dob);
     if ($userAge < 13) {
       $potentialErrors[] = 'You must be 13 and above to register.';
@@ -92,9 +86,11 @@
     }
 
     if (empty($potentialErrors)) {
+      $potentialErrors[] = "Added User!";
       addUser($link, $email, $userName,  $first_name, $last_name, $password, $dob, $contact);
       header('Location: ' . "register.php?&dialog=" . json_encode($potentialErrors));
     } else {
+      header('Location: ' . "register.php?&error=true&dialog=" . json_encode($potentialErrors));
     }
   }
 
@@ -179,15 +175,8 @@
                         value="<?php if (isset($_POST['password_validate'])) echo $_POST['password_validate']; ?>">
                 </div>
             </div>
-            <div class="col-3">
-                <div class="form-check"><br>
-                    <div class="g-recaptcha brochure__form__captcha"
-                        data-sitekey="6LfoXZYeAAAAALxcnCubhjJfFxq4laklzjSegYR6"></div>
-
-                </div>
-            </div>
             <div class="col-12">
-                <button name="submit" type="submit" class="btn btn-primary">Register</button>
+                <button name="register" type="submit" class="btn btn-primary">Register</button>
             </div>
         </form>
     </div>
