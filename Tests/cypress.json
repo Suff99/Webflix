@@ -1,5 +1,6 @@
 {
     "baseUrl": "https://craig.software/webflix/",
     "viewportHeight": 1080,
-    "viewportWidth": 1920
+    "viewportWidth": 1920,
+    "videoCompression": false
 }

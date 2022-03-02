@@ -83,11 +83,6 @@ header('Content-Type: text/html; charset=utf-8');
         ?>
       </li>
     </ul>
-
-    <form class="form-inline my-2 my-lg-0" action="search.php" method="post" class="alert-dismissible fade show" role="alert">
-      <input id="search" name="search" type="text" class="form-control mr-sm-2" required="required">
-      <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
   </nav>
 
   <br> <br> <br> <br> <br> <br> <br> <br>

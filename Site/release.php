@@ -167,7 +167,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="offset-4 col-8">
-                            <button name="user_id" type="submit" class="btn btn-primary">Submit</button>
+                            <button name="add_comment" type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
                 </form>

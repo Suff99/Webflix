@@ -2,3 +2,4 @@
 includes/database.php
 Site/includes/nav_newish.php
 Tests/node_modules/
+*.mp4

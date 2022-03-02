@@ -1,3 +1,12 @@
+
+
+//We must retain cookies so that between tests, the user remains logged in
+//Without the user being logged in, the user cannot make comments and the comments related tests will fail
+Cypress.Cookies.defaults({
+    preserve: 'webflix_session',
+})
+
+
 describe('Registration', () => {
 
     it('successfully loads', () => {
@@ -24,14 +33,14 @@ describe('Registration', () => {
 
         cy.get('#username')
             .should('be.visible')
-            .type('JohnDoe99')
+            .type('JohnDoe99').blur()
         cy.get('#contact')
             .should('be.visible')
             .type('07700900537')
 
         cy.get('#email')
             .should('be.visible')
-            .type('john-doe@example.com')
+            .type('john-doe@example.com').blur()
 
         cy.get('#password')
             .should('be.visible')
@@ -54,8 +63,12 @@ describe('Registration', () => {
 
 
 describe('Log in', () => {
+
+    it('successfully loads', () => {
+        cy.visit('https://craig.software/webflix/login.php')
+    })
+
     it('Logging in', () => {
-        cy.visit('login.php')
         cy.get('input[name=email]')
             .should('be.visible')
             .type('john-doe@example.com')
@@ -77,7 +90,7 @@ describe('Release Selection', () => {
         cy.visit("titles.php?type=movies")
     })
 
-    it('Release Card - Show Collapsed Content', () => { 
+    it('Release Card - Show Collapsed Content', () => {
         cy.get('img[class="card-img"]').first().scrollIntoView().click({ force: true })
     })
 
@@ -86,4 +99,42 @@ describe('Release Selection', () => {
         cy.get('div[id="v_modal"]').should('be.visible')
     })
 
+    it('Release Card - Redirect to Release page', () => {
+        cy.get('a[name="info"]').first().click({ force: true })
+        cy.url({ decode: true }).should('contain', 'release.php')
+    })
+
+})
+
+describe('Review', () => {
+
+    const commentContent = "Wow! This was such a good movie!";
+
+    it('Write Comment', () => {
+        cy.get('textarea[id="comment"]').first().scrollIntoView().type(commentContent)
+    })
+
+    it('Select Rating (5 Stars)', () => {
+        cy.get('input[value="5"]').click({ force: true }); //Force click due to mdandatory styling. 
+    })
+
+    it('Submit Review', () => {
+        cy.get('button[name="add_comment"]')
+            .should('be.visible')
+            .click()
+    })
+
+    it('Validate Successful Review', () => {
+        cy.contains(commentContent)
+            .should('exist')
+            .click()
+    })
+
+})
+
+
+describe('Log out', () => {
+    it('successfully loads', () => {
+        cy.visit('https://craig.software/webflix/logout.php')
+    })
 })
