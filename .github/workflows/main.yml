@@ -8,14 +8,14 @@ jobs:
     container: cypress/browsers:node12.18.3-chrome87-ff82
     steps:
       - name: Checkout
+        working-directory: Tests
         uses: actions/checkout@v2
-        working-directory: ./Tests
 
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
+        working-directory: Tests
         uses: cypress-io/github-action@v2
-        working-directory: ./Tests
         with:
           # Specify Browser since container image is compile with Firefox
           browser: firefox
