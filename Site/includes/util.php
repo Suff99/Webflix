@@ -41,7 +41,6 @@ function confirmGetExistence($value, $sql)
 function addComment($link, $r_comment, $r_rating, $r_userid, $r_release_id)
 {
     $addCommentQ = "INSERT INTO `wf_comments` (`message`, `rating`, `release_id`, `user_id`, `date`) VALUES ('$r_comment', '$r_rating', '$r_release_id', '$r_userid', now());";
-    printf($addCommentQ);
     $result = @mysqli_query($link, $addCommentQ);
 }
 
@@ -66,7 +65,7 @@ function addRelease($db, $date, $release_title, $addtional_info_json, $trailer_i
     if (!$results) return false;
 
     if (mysqli_num_rows($results) == 0) {
-        $addMovieQuery = "INSERT INTO wf_releases(`title`, `addtional_info`, `trailer`, `watch_link`, `date`, `images`, `release_type`, `categories`) VALUES ('$release_title','$addtional_info_json','$trailer_id','$watch_link', STR_TO_DATE('$date','%d-%m-%Y'),'$image_json','$release_type','$categories')";
+        $addMovieQuery = "INSERT INTO wf_releases(`title`, `additional_info`, `trailer`, `watch_link`, `date`, `images`, `release_type`, `categories`) VALUES ('$release_title','$addtional_info_json','$trailer_id','$watch_link', STR_TO_DATE('$date','%d-%m-%Y'),'$image_json','$release_type','$categories')";
         $result = @mysqli_query($db, $addMovieQuery);
         if (!$result) {
             echo "ERROR!</br>";

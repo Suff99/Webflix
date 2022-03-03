@@ -4,6 +4,7 @@
 <head>
 
 <body class="d-flex flex-column min-vh-100">
+    <div class="background-image"></div>
     <div class="header">
         <?php
         require('includes/database.php');
@@ -32,8 +33,10 @@
 
     <br><br>
 
-    <h1 style="<?php echo (empty($movie) ? '' : 'display: none') ?>">Aw Snap!</h1>
-    <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black" style="<?php echo (empty($movie) ? '' : 'display: none') ?>">
+    <h1 style="<?php printf($movie);
+                echo empty($movie) ? '' : 'display: none' ?>">Aw Snap!</h1>
+
+    <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black" style="<?php echo empty($movie) ? '' : 'display: none' ?>">
         <p> The title you are looking for could not be found... </p>
     </div>
 
@@ -45,16 +48,31 @@
     }
     ?>
 
+    <style>
+        .background-image {
+            background-image: url('<?php echo json_decode($movie['images'])->backdrop; ?>');
+            background-size: cover;
+            display: block;
+            filter: blur(15px);
+            -webkit-filter: blur(15px);
+            height: 100%;
+            left: 0;
+            position: fixed;
+            right: 0;
+            z-index: -90;
+        }
+    </style>
+
     <br><br><br><br><br>
     <div class="row text-left justify-content-center align-items-left mx-0 px-0 text-black" style="<?php echo (!empty($movie) ? '' : 'display: none') ?>">
 
-        <div class="jumbotron" style="width: 80%">
+        <div class="jumbotron" style="background: rgba(255, 255, 255, 0.75)">
 
             <div class="container">
                 <div class="row">
 
                     <div class="col">
-                        <img src="<?php echo json_decode($movie['images'])->backdrop; ?>" class="card-img" alt="<?php echo $movie['title'] ?>" style="width:100; height:100;">
+                        <img src="<?php echo json_decode($movie['images'])->poster; ?>" class="card-img" alt="<?php echo $movie['title'] ?>" style="width:100; height:100;">
                     </div>
 
 
@@ -73,7 +91,7 @@
                                     <th scope="row">Supported Languages</th>
                                     <?php
                                     $langString = "";
-                                    $langs = json_decode($movie['addtional_info'])->languages;
+                                    $langs = json_decode($movie['additional_info'])->languages;
                                     foreach ($langs as $lang) {
                                         $langString .= $lang . " ";
                                     }
@@ -104,12 +122,12 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Duration</th>
-                                    <td> <?php echo json_decode($movie['addtional_info'])->runtime ?>
+                                    <td> <?php echo json_decode($movie['additional_info'])->runtime ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Watch</th>
-                                    <td> <?php echo '<a style="color: #2c0a0a;" href="' . (empty($movie['watch_link']) ? "Coming soon" : $movie['watch_link']) . '">' . $movie['watch_link'] . '</a>' ?>
+                                    <td> <?php echo '<a style="color: #2c0a0a;" href="' . empty($movie['watch_link']) ? "Coming soon" : $movie['watch_link'] . '">' . $movie['watch_link'] . '</a>' ?>
                                     </td>
                                 </tr>
                                 <tr>
@@ -144,7 +162,7 @@
 
         <div class="container text-center justify-content-center align-items-center text-black">
 
-            <div class="jumbotron" style="width: 100%">
+            <div class="jumbotron" style="background: rgba(255, 255, 255, 0.75)">
                 <form action="includes/comment.php?release_id=<?php echo $id; ?>" method="post" class="alert-dismissible fade show" role="alert" style="<?php echo (!isset($_SESSION['user_id']) ? 'display: none' : ' ') ?>">
                     <div class="form-group row text-left justify-content-left align-items-left mx-0 px-0 text-black">
                         <label for="review" class="col-4 col-form-label" value="<?php echo $_POST['release_id'] ?>">Review</label>
@@ -172,18 +190,14 @@
                     </div>
                 </form>
 
-                <div class="jumbotron" style=" <?php echo (isset($_SESSION['user_id']) ? 'display: none' : '') ?>">
-                    <center> <a type="submit" href="login.php">
-                            <h5>Please login to leave a comment</h5>
-                        </a></center>
-                </div>
-
+                <div style="<?php echo (isset($_SESSION['user_id']) ? 'display: none' : '') ?>"><center><a type="submit" href="login.php"> <h5>Please login to leave a comment</h5> </a></center></div>
             </div>
         </div>
 
     </div>
 
     <script>
+        // Twitter sharing functionality for Twitter share button
         $(document).on('click', '#share_twitter', function() {
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
@@ -191,6 +205,7 @@
             shareOnTwitter(id, document.title);
         });
 
+        // Facebook sharing functionality for Facebook share button
         $(document).on('click', '#share_facebook', function() {
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
@@ -248,7 +263,7 @@
 
                 echo '</figcaption>
       </figure>
-    </div>';
+    </div<br><br>';
             }
         }
         ?>

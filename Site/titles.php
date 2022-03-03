@@ -106,10 +106,12 @@
       $('.video-btn').click(function() {
         $videoSrc = $(this).data("src");
         document.getElementById('the_trailer').src = $videoSrc;
+       // $("body").css("filter", "blur(1.5rem)");
       });
 
       $('#v_modal').on('hide.bs.modal', function(e) {
         document.getElementById('the_trailer').src = "";
+       // $("body").css("filter", "");
       });
 
 
