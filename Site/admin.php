@@ -48,7 +48,7 @@
           <div class="card-body">
             <h5 class="card-title">Add Category</h5>
             <p class="card-text">Register a new category</p>
-            <button data-toggle="modal" data-target="#category_modal" class="btn btn-primary">Go</button>
+            <button name="add_category" data-toggle="modal" data-target="#category_modal" class="btn btn-primary">Go</button>
           </div>
         </div>
       </div>
@@ -59,7 +59,7 @@
           <div class="card-body">
             <h5 class="card-title">List Categories</h5>
             <p class="card-text">List categories and delete them</p>
-            <button data-toggle="modal" data-target="#categories_modal" class="btn btn-primary">Go</button>
+            <button name="list_categories" data-toggle="modal" data-target="#categories_modal" class="btn btn-primary">Go</button>
           </div>
 
         </div>
@@ -86,7 +86,7 @@
             $result = @mysqli_query($link, $queryCategories);
             while ($category = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
               echo '<li class="list-group-item"><p class="card-text">' . $category['name'];
-              echo '<a href="includes/delete_category.php?category_id=' . $category['id'] . '">&nbsp;&nbsp;<i class="bi bi-trash-fill" style="color:black;"></i></p></a>';
+              echo '<a name="delete_'.$category['name'].'" href="includes/delete_category.php?category_id=' . $category['id'] . '">&nbsp;&nbsp;<i class="bi bi-trash-fill" style="color:black;"></i></p></a>';
               echo '</li>';
             }
             ?>

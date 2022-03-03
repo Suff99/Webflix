@@ -123,6 +123,12 @@ function createMetaTags($title, $description, $thumbnail)
     echo '<link rel="icon" type="image/png" href="' . $thumbnail . '"/>' . PHP_EOL;
 }
 
+// Change User Role (user/admin)
+function changeRole($link, $user, $role){
+    $updateRoleQuerty = "UPDATE `webflix_db`.`wf_users` SET `role`='$role' WHERE  `user_id`=$user;";
+    printf($updateRoleQuerty);
+    $result = @mysqli_query($link, $updateRoleQuerty);
+}
 
 function createReleaseCard($movie)
 {

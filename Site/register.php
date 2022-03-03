@@ -59,21 +59,19 @@
     }
 
 
-    if (empty($potentialErrors)) {
       $selectUser = "SELECT username FROM wf_users WHERE email='$email'";
       $userResults = @mysqli_query($link, $selectUser);
       if (mysqli_num_rows($userResults) != 0) {
         $potentialErrors[] = 'Email address already registered. <h1 href="login.php">Login</h2>';
       }
-    }
+  
 
-    if (empty($potentialErrors)) {
       $selectUserName = "SELECT username FROM wf_users WHERE username='$userName'";
       $result = @mysqli_query($link, $selectUserName);
       if (mysqli_num_rows($result) != 0) {
         $potentialErrors[] = 'Username already registered. <h1 href="login.php">Login</h1>';
       }
-    }
+
 
     if (!empty($_POST['password'])) {
       if ($_POST['password'] != $_POST['password_validate']) {
@@ -86,9 +84,9 @@
     }
 
     if (empty($potentialErrors)) {
-      $potentialErrors[] = "Added User!";
+      $potentialErrors[] = "Added User! You can now login!";
       addUser($link, $email, $userName,  $first_name, $last_name, $password, $dob, $contact);
-      header('Location: ' . "register.php?&dialog=" . json_encode($potentialErrors));
+      header('Location: ' . "login.php?&dialog=" . json_encode($potentialErrors));
     } else {
       header('Location: ' . "register.php?&error=true&dialog=" . json_encode($potentialErrors));
     }
