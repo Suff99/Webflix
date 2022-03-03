@@ -257,7 +257,7 @@
 
                 if (isset($_SESSION['user_id'])) {
                     if ($comment['user_id'] == $_SESSION['user_id']) {
-                        echo '<a href="includes/delete_comment.php?release=' . $id . '&comment=' . $comment['comment_id'] . '"> <button class="btn btn-primary"> <i class="bi bi-trash-fill"></i> Delete</button></a>';
+                        echo '<a href="includes/delete_comment.php?release=' . $id . '&comment=' . $comment['comment_id'] . '"> <button name="user_del_comment" class="btn btn-primary"> <i class="bi bi-trash-fill"></i> Delete</button></a>';
                     }
                 }
 
@@ -271,14 +271,9 @@
         <nav class="row g-0 text-center justify-content-center align-items-center mx-0 px-0">
             <ul class="pagination">
                 <?php
-
-
-
-                if (mysqli_num_rows($comments) > 3) {
                     for ($page = 1; $page <= $number_of_page; $page++) {
                         echo '<li class="page-item' . (($page == $currentPage) ? ' active' : "") . '"><a class="page-link" href="release.php?id=' . $id . '&page=' . $page . '#comments">' . $page . '</a></li>';
                     }
-                }
                 ?>
             </ul>
         </nav>

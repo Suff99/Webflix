@@ -125,7 +125,7 @@
                 <div class="input-group">
                     <span class="input-group-text">@</span>
                     <input type="text" class="form-control" name="username" id="username"
-                        aria-describedby="inputGroupPrepend2" required>
+                        aria-describedby="inputGroupPrepend2" pattern="^[A-Za-z][A-Za-z0-9_]{4,29}$" title="Only letters, Numbers and underscores accepted" required>
                 </div>
             </div>
 

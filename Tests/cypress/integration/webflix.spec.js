@@ -130,11 +130,45 @@ describe('Review', () => {
             .click()
     })
 
+
+    it('Delete Review', () => {
+        cy.get('button[name="user_del_comment"]')
+            .should('be.visible')
+            .click()
+    })
+
+    it('Validate Deleted Review', () => {
+        cy.contains(commentContent)
+            .should('not.exist')
+    })
+
+    it('validates standard users cannot access Admin Page', () => {
+        cy.visit('admin.php')
+        cy.contains("You do not have permission to access the intended page.")
+            .should('exist')
+    })
+
+
 })
 
 
 describe('Log out', () => {
     it('successfully loads', () => {
         cy.visit('https://craig.software/webflix/logout.php')
+    })
+})
+
+describe('Guest User Access', () => {
+
+    it('validates guests cannot access Admin Page', () => {
+        cy.visit('admin.php')
+        cy.contains("You do not have permission to access the intended page.")
+            .should('exist')
+    })
+
+    it('validates guests cannot make comments on releases', () => {
+        cy.visit('release.php?id=1')
+        cy.get('button[name="add_comment"]')
+            .should('not.visible')
     })
 })
