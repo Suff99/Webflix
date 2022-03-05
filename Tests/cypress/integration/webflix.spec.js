@@ -123,12 +123,6 @@ describe('Review', () => {
         cy.contains("You do not have permission to access the intended page.")
             .should('exist')
     })
-
-    it('Raise Privileges', () => {
-        cy.visit('includes/raise_priv.php?role=admin') // Not really a test
-        logout();
-    })
-
 })
 
 
@@ -151,38 +145,39 @@ describe('Guest User Access', () => {
 
 
 describe('Administration Tasks', () => {
+    if (Cypress.env("email") && Cypress.env("password")) {
 
-    loginViaEnv();
+        loginViaEnv();
 
-    it('Visit Admin page', () => {
-        cy.visit('admin.php')
-    })
+        it('Visit Admin page', () => {
+            cy.visit('admin.php')
+            cy.contains("Admin Panel!")
+                .should('exist')
+                .click()
+        })
 
-    const categoryName = "Test Category!";
+        const categoryName = "Test Category!";
 
-    it('Add Category', () => {
-        cy.get('button[name="add_category"]').click()
-        cy.get('input[name="category"]').type(categoryName);
-        cy.get('textarea[name="description"]').type('This category was added as the result of a test!');
-        cy.get('button[name="btn_category"]').click()
-    })
+        it('Add Category', () => {
+            cy.get('button[name="add_category"]').click()
+            cy.get('input[name="category"]').type(categoryName);
+            cy.get('textarea[name="description"]').type('This category was added as the result of a test!');
+            cy.get('button[name="btn_category"]').click()
+        })
 
-    it('Delete Category', () => {
-        cy.get('button[name="list_categories"]').click()
-        cy.get('a[name="delete_' + categoryName + '"]').first().click()
-        cy.contains("Deleted Category").should("exist")
-    })
-});
-
+        it('Delete Category', () => {
+            cy.get('button[name="list_categories"]').click()
+            cy.get('a[name="delete_' + categoryName + '"]').first().click()
+            cy.contains("Deleted Category").should("exist")
+        })
+    } else {
+        it('Skipped Administration Tasks due to missing Administration Details', () => {})
+    }
+})
 
 // Log out when all tests are done. This ensures that the user is logged out
 // when a new testing session has begun so that the logging in/registration tests do not fail
 describe('Clean up', () => {
-
-    it('Lower Privileges', () => {
-        cy.visit('includes/raise_priv.php?role=user') // Not really a test
-    })
-
     logout();
 })
 
