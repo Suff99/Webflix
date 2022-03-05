@@ -13,5 +13,5 @@ jobs:
       - name: Install & Run
         run: npm install && npx cypress run
 env:
-  CYPRESS_username: ${{secrets.CYPRESS_EMAIL}}
+  CYPRESS_email: ${{secrets.CYPRESS_EMAIL}}
   CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}

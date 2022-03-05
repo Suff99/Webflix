@@ -194,17 +194,15 @@ function logout() {
 
 function loginViaEnv(){
     it('Logging in (Admin)', () => {
-        const adminEmail = Cypress.env('email')
-        const adminPass = Cypress.env('password')
 
         cy.visit('https://craig.software/webflix/login.php')
         cy.get('input[name=email]')
             .should('be.visible')
-            .type(adminEmail)
+            .type(Cypress.env('email'))
 
         cy.get('input[name=password]')
             .should('be.visible')
-            .type(adminPass)
+            .type(Cypress.env('password'))
 
         cy.get('button[name=login]')
             .should('be.visible')

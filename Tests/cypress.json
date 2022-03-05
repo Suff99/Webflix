@@ -3,6 +3,8 @@
   "viewportHeight": 1080,
   "viewportWidth": 1920,
   "videoCompression": false,
-  "email": "",
-  "password": ""
+  "env": {
+    "email": "",
+    "password": ""
+  }
 }
