@@ -1,15 +1,17 @@
-name: GitHub Actions - Cypress Testing 
-on: [push]
+name: GitHub Actions - Cypress Testing
+on: [ push ]
 defaults:
   run:
-    working-directory: Tests   
+    working-directory: Tests
 jobs:
- cypress-run:
+  cypress-run:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2 
+      - uses: actions/checkout@v2
       - name: Install node
         uses: actions/setup-node@v2
       - name: Install & Run
-        run: npm install && npx cypress run      
-     
+        run: npm install && npx cypress run
+env:
+  CYPRESS_username: ${{secrets.CYPRESS_EMAIL}}
+  CYPRESS_password: ${{secrets.CYPRESS_PASSWORD}}

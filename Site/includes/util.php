@@ -11,7 +11,7 @@ function loadLangs()
 {
     $list = array();
     $json = file_get_contents("https://craig.software/webflix/data/langs.json");
-    $data  = json_decode($json);
+    $data = json_decode($json);
     foreach ($data as &$value) {
         array_push($list, $value);
     }
@@ -87,7 +87,7 @@ function lockPageFromUser()
 
 function getUrl()
 {
-    $url      = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     $validURL = str_replace("&", "&amp;", $url);
     return $validURL;
 }
@@ -124,7 +124,8 @@ function createMetaTags($title, $description, $thumbnail)
 }
 
 // Change User Role (user/admin)
-function changeRole($link, $user, $role){
+function changeRole($link, $user, $role)
+{
     $updateRoleQuerty = "UPDATE `webflix_db`.`wf_users` SET `role`='$role' WHERE  `user_id`=$user;";
     printf($updateRoleQuerty);
     $result = @mysqli_query($link, $updateRoleQuerty);
@@ -147,7 +148,7 @@ function createReleaseCard($movie)
     echo '<div class="card-body">';
     echo '<h5 class="card-title">' . $movie['title'] . '</h5>';
     echo '<div class="collapse" id="release_' . $movie['id'] . '">';
-    echo '<p class="card-text">' . $movie['tagline']. '</p>';
+    echo '<p class="card-text">' . $movie['tagline'] . '</p>';
     echo '<button type="button" class="btn btn-primary video-btn" data-toggle="modal" data-src="https://www.youtube.com/embed/' . $movie['trailer'] . '" data-target="#v_modal">
     Trailer
   </button>';
@@ -213,8 +214,8 @@ function handleDialog()
             $error = $_GET['error'];
         }
 
-        echo '<br><br><br><div class="alert ' .  (($error == 'true') ? 'alert-danger"' : "alert-success")  . ' alert-dismissable">
-      <h4 class="alert-heading">' .  (($error == 'true') ? 'Failed!' : "Success")  . '</h4>
+        echo '<br><br><br><div class="alert ' . (($error == 'true') ? 'alert-danger"' : "alert-success") . ' alert-dismissable">
+      <h4 class="alert-heading">' . (($error == 'true') ? 'Failed!' : "Success") . '</h4>
       <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>';
         foreach ($messages as $msg) {
             echo "$msg";

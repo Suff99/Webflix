@@ -65,44 +65,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body class="d-flex flex-column min-vh-100">
 
-    <style>
-        .card {
-            display: inline-block;
-        }
-    </style>
+<style>
+    .card {
+        display: inline-block;
+    }
+</style>
 
-    <div class="container">
+<div class="container">
 
-        <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
-            <p>
-            <h1>Login</h1>
-            </p>
-        </div>
-
-        <div class="row">
-            <div class="col-sm">
-                <form action="login.php" method="post" class="alert-dismissible fade show" role="alert">
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="text" class="form-control" name="email" placeholder="example@emample.com">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Password</label>
-                        <input type="password" class="form-control" name="password" placeholder="Password">
-                    </div>
-                    <button name="login" type="submit" class="btn btn-primary" value="Login">Sign in</button>
-                    <button type="button" class="btn btn-primary" onclick="window.location.href='register.php';">Register</button>
-                </form>
-            </div>
-        </div>
+    <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
+        <p>
+        <h1>Login</h1>
+        </p>
     </div>
 
+    <div class="row">
+        <div class="col-sm">
+            <form action="login.php" method="post" class="alert-dismissible fade show" role="alert">
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="text" class="form-control" name="email" placeholder="example@emample.com">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" placeholder="Password">
+                </div>
+                <button name="login" type="submit" class="btn btn-primary" value="Login">Sign in</button>
+                <button type="button" class="btn btn-primary" onclick="window.location.href='register.php';">Register
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 
 
-
-
-
-
-    <?php
-    require('includes/footer.php');
-    ?>
+<?php
+require('includes/footer.php');
+?>
