@@ -151,12 +151,10 @@ describe('Administration Tasks', () => {
 
         it('Visit Admin page', () => {
             cy.visit('admin.php')
-            cy.contains("Admin Panel!")
-                .should('exist')
-                .click()
+            cy.contains("Admin Panel").should('exist')
         })
 
-        const categoryName = "Test Category!";
+        const categoryName = "Test";
 
         it('Add Category', () => {
             cy.get('button[name="add_category"]').click()
