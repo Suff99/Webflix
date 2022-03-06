@@ -1,0 +1,23 @@
+{
+    "title": "Star Wars - A New Hope",
+    "runtime": "121",
+    "tagline": "A long time ago in a galaxy far, far away...",
+    "description": "Princess Leia is captured and held hostage by the evil Imperial forces in their effort to take over the galactic Empire. Venturesome Luke Skywalker and dashing captain Han Solo team together with the loveable robot duo R2-D2 and C-3PO to rescue the beautiful princess and restore peace and justice in the Empire.",
+    "categories": [
+        "Science Fiction",
+        "Adventure",
+        "Action"
+    ],
+    "trailer": "https://youtu.be/1g3_CFmnU7k",
+    "watch_link": "http://www.starwars.com/films/star-wars-episode-iv-a-new-hope",
+    "release_date": {
+        "year": "1977",
+        "month": "Dec",
+        "day": "27"
+    },
+    "images" : {
+        "poster" : "https://image.tmdb.org/t/p/original/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg",
+        "backdrop" : "https://image.tmdb.org/t/p/original/zqkmTXzjkAgXmEWLRsY4UpTWCeo.jpg"
+    },
+    "release_type" : "Movie"
+}

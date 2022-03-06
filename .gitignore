@@ -2,3 +2,4 @@
 Tests/node_modules/
 *.mp4
 .idea/
+/Tests/cypress.env.json

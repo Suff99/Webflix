@@ -23,7 +23,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Add Title</h5>
                     <p class="card-text">Register a new title</p>
-                    <a href="addtitle.php" class="btn btn-primary">Go</a>
+                    <a name="add_movie" href="addtitle.php" class="btn btn-primary">Go</a>
                 </div>
             </div>
         </div>
