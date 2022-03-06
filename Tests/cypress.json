@@ -2,10 +2,5 @@
   "baseUrl": "https://craig.software/webflix/",
   "viewportHeight": 1080,
   "viewportWidth": 1920,
-  "videoCompression": false,
-  "env": {
-    "__comment" : "To test Admin details of the application, you must give admin details below, else Admin related tasks will be skipped",
-    "email": "",
-    "password": ""
-  }
+  "videoCompression": false
 }
