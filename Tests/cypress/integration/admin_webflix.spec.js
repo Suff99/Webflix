@@ -5,6 +5,8 @@ Cypress.Cookies.defaults({
     preserve: 'webflix_session',
 })
 
+logout();
+
 describe('Administration Tasks', () => {
     if (Cypress.env("email") && Cypress.env("password")) {
 
@@ -30,7 +32,7 @@ describe('Administration Tasks', () => {
             cy.contains("Deleted Category").should("exist")
         })
 
-        it ('Movie Form', () => {
+        it('Movie Form', () => {
             cy.get('a[name="add_movie"]').click()
             cy.url().should('include', 'addtitle.php')
             cy.fixture('star_wars.json').then((movie) => {
@@ -44,23 +46,44 @@ describe('Administration Tasks', () => {
                 cy.get('input[id="tagline"]').type(movie.tagline);
                 cy.get('input[id="trailer_id"]').type(movie.trailer);
                 cy.get('input[id="watch_link"]').type(movie.watch_link);
-                cy.get('div[id="runtime_tv"]').should("not.visible")
-                cy.get('div[id="runtime_mv"]').should("be.visible")
-                cy.get('input[id="movie_runtime"]').type(movie.runtime);
+                cy.get('input[id="runtime"]').type(movie.runtime);
 
 
                 cy.get('#release_date').click()
                 cy.get('select[class=ui-datepicker-year]').select(movie.release_date.year)
                 cy.get('select[class=ui-datepicker-month]').select(movie.release_date.month)
-                cy.get('a[data-date="'+movie.release_date.day+'"]').click()
-                cy.screenshot()                
+                cy.get('a[data-date="' + movie.release_date.day + '"]').click()
+
+                for (let i = 0; i < movie.languages.length; i++) {
+                    cy.get('select[id="select_lang"]').select(movie.languages[i]);
+                }
+
+
+                  for (let i = 0; i < movie.categories.length; i++) {
+                    cy.get('select[id="select_categories"]').select(movie.categories[0]);
+                  }
+
+
+                cy.screenshot()
+
+                cy.get('button[type="submit"]').click()
             })
         })
 
 
-            it('successfully logged out', () => {
-                cy.visit('https://craig.software/webflix/logout.php')
-            })
+        it('Validate Movie was added', () => {
+            cy.url().should('include', '/release.php')
+        })
+
+        it('Delete Movie', () => {
+            cy.url().should('include', '/release.php')
+            cy.get('a[name="del_title"]').should("exist").click()
+        })
+
+
+        it('successfully logged out', () => {
+            cy.visit('https://craig.software/webflix/logout.php')
+        })
 
     } else {
         it('Skipped Administration Tasks due to missing Administration Details', () => {
@@ -84,5 +107,12 @@ function loginViaEnv() {
         cy.get('button[name=login]')
             .should('be.visible')
             .click()
+    })
+}
+
+
+function logout() {
+    it('successfully logged out', () => {
+        cy.visit('https://craig.software/webflix/logout.php')
     })
 }

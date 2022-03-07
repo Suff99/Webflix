@@ -8,16 +8,7 @@
     require('includes/database.php');
     require('includes/nav.php');
 
-    session();
-    createMetaTags("Admin Panel", "Create and Edit", "");
-    lockPageFromUser();
-
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-
-        foreach ($_POST as $key => $value) {
-            echo "Field " . htmlspecialchars($key) . " is " . json_encode($value) . "<br>";
-        }
 
         require('includes/database.php');
         $potentialErrors = array();
@@ -61,7 +52,7 @@
             array_push($potentialErrors, "Missing Release Date");
         }
 
-        if (!$runrtime) {
+        if (!$runtime) {
             array_push($potentialErrors, "Missing Runtime");
         }
 
@@ -89,12 +80,14 @@
             );
 
             $releaseAdd = addRelease($link, $release_date, $title, json_encode($addtional_info), $trailer_id, json_encode($images), $release_type, $watch_link, $categories);
-            header('Location: ' . 'release.php?id=' . $releaseAdd . "&dialog=" . json_encode($releaseAdd));
+            header('Location: ' . 'release.php?id=' . $releaseAdd . "&dialog=" . json_encode(array("Registered release successfully!")));
         } else {
             header('Location: ' . 'admin.php?error=true&dialog=' . json_encode($potentialErrors));
-            echo 'Please try again.</div>';
-            mysqli_close($link);
         }
+    } else {
+        session();
+        createMetaTags("Admin Panel", "Create and Edit", "");
+        lockPageFromUser();
     }
     ?>
 </div>
@@ -173,20 +166,13 @@
                 </div>
 
 
-                <div class="form-group row" id="runtime_mv">
-                    <label for="release_type" class="col-4 col-form-label">Runtime</label>
+                <div class="form-group row">
+                    <label id="movie_minutes" for="runtime" class="col-4 col-form-label">Runtime</label>
+                    <label id="tv_seasons" for="runtime" class="col-4 col-form-label">Seasons</label>
                     <div class="col-8">
-                        <input id="movie_runtime" name="runtime" type="text" required="required" class="form-control">
+                        <input id="runtime" name="runtime" type="text" required="required" class="form-control">
                     </div>
                 </div>
-
-                <div class="form-group row" id="runtime_tv">
-                    <label for="release_type" class="col-4 col-form-label">Number of Seasons</label>
-                    <div class="col-8">
-                        <input id="tv_runtime" name="runtime" type="text" required="required" class="form-control">
-                    </div>
-                </div>
-
 
                 <div class="form-group row">
                     <label class="col-4">Categories</label>
@@ -284,15 +270,15 @@
     createDatePicker("#release_date");
     
     onChange();
-    
+
     function onChange() {
         var type = document.getElementById("release_type").value;
         if (type === "movie") {
-            document.getElementById("runtime_tv").style.display = "none";
-            document.getElementById("runtime_mv").style.display = "";
+            document.getElementById("tv_seasons").style.display = "none";
+            document.getElementById("movie_minutes").style.display = "inline";
         } else {
-            document.getElementById("runtime_mv").style.display = "none";
-            document.getElementById("runtime_tv").style.display = "";
+            document.getElementById("movie_minutes").style.display = "none";
+            document.getElementById("tv_seasons").style.display = "inline";
         }
     }
     </script>

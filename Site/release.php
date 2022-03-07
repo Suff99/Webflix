@@ -158,7 +158,7 @@ if (isset($_GET['user_id'])) {
                         if (isset($_SESSION['role'])) {
                             if (strcmp($_SESSION['role'], "admin") == 0) {
                                 echo '<p> Admin Zone </p> <br>
-                                <button class="btn btn-primary" href="includes/delete_title.php?release=' . $id . '"><i class="bi bi-trash-fill"></i> Delete Title</button>';
+                                <a name="del_title" class="btn btn-primary" href="includes/delete_title.php?release=' . $id . '"><i class="bi bi-trash-fill"></i> Delete Title</a>';
                             }
                         }
                         ?>

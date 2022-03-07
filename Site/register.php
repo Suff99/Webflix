@@ -54,8 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $userAge = calculateAge($dob);
-    if ($userAge < 13) {
-        $potentialErrors[] = 'You must be 13 and above to register.';
+    if ($userAge < 18) {
+        $potentialErrors[] = 'You must be 18 and above to register.';
     }
 
 

@@ -8,7 +8,10 @@
         "Adventure",
         "Action"
     ],
-    "trailer": "https://youtu.be/1g3_CFmnU7k",
+    "languages": [
+        "English"
+    ],
+    "trailer": "https://www.youtube.com/watch?v=vZ734NWnAHA",
     "watch_link": "http://www.starwars.com/films/star-wars-episode-iv-a-new-hope",
     "release_date": {
         "year": "1977",

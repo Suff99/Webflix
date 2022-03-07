@@ -59,12 +59,6 @@ function addCategory($db, $category_name, $category_description)
 // Registers a new release 
 function addRelease($db, $date, $release_title, $addtional_info_json, $trailer_id, $image_json, $release_type, $watch_link, $categories)
 {
-    $titleLookup = "SELECT title FROM wf_releases WHERE title='$release_title'";
-    $results = @mysqli_query($db, $titleLookup);
-
-    if (!$results) return false;
-
-    if (mysqli_num_rows($results) == 0) {
         $addMovieQuery = "INSERT INTO wf_releases(`title`, `additional_info`, `trailer`, `watch_link`, `date`, `images`, `release_type`, `categories`) VALUES ('$release_title','$addtional_info_json','$trailer_id','$watch_link', STR_TO_DATE('$date','%d-%m-%Y'),'$image_json','$release_type','$categories')";
         $result = @mysqli_query($db, $addMovieQuery);
         if (!$result) {
@@ -72,7 +66,6 @@ function addRelease($db, $date, $release_title, $addtional_info_json, $trailer_i
             echo "$addMovieQuery<br><br>";
         }
         return $db->insert_id;
-    }
 }
 
 

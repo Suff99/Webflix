@@ -5,6 +5,10 @@ Cypress.Cookies.defaults({
     preserve: 'webflix_session',
 })
 
+Cypress.Screenshot.defaults({
+    capture: 'runner',
+  })
+
 // Testing whether a user can successfully use the registration form.
 describe('Registration', () => {
 
@@ -52,6 +56,7 @@ describe('Registration', () => {
         cy.get('button[name="register"]')
             .should('be.visible')
             .click()
+        cy.screenshot()      
     })
 })
 
@@ -67,7 +72,7 @@ describe('Release Selection', () => {
     })
 
     it('Release Card - Show Collapsed Content', () => {
-        cy.get('img[class="card-img"]').first().scrollIntoView().click({force: true})
+        cy.get('img[class="card-img title_image zoom"]').first().scrollIntoView().click({force: true})
     })
 
     it('Release Card - Show Trailer', () => {
@@ -122,6 +127,7 @@ describe('Review', () => {
         cy.visit('admin.php')
         cy.contains("You do not have permission to access the intended page.")
             .should('exist')
+        cy.screenshot();    
     })
 })
 
