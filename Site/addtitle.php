@@ -92,7 +92,7 @@
             header('Location: ' . 'release.php?id=' . $releaseAdd . "&dialog=" . json_encode($releaseAdd));
         } else {
             header('Location: ' . 'admin.php?error=true&dialog=' . json_encode($potentialErrors));
-            echo 'Please try again.</p></div>';
+            echo 'Please try again.</div>';
             mysqli_close($link);
         }
     }
@@ -161,25 +161,32 @@
                         </div>
                     </div>
                 </div>
-    
+
                 <div class="form-group row">
                     <label for="release_type" class="col-4 col-form-label">Release Type</label>
                     <div class="col-8">
-                        <select id="release_type" name="release_type" class="custom-select" required="required">
+                        <select id="release_type" onchange="onChange()" name="release_type" class="custom-select" required="required">
                             <option value="series">TV Series</option>
                             <option value="movie">Movie</option>
                         </select>
                     </div>
                 </div>
 
-                <div class="form-group row">
-                    <label for="release_type" class="col-4 col-form-label">Runtime/Number of Seasons</label>
+
+                <div class="form-group row" id="runtime_mv">
+                    <label for="release_type" class="col-4 col-form-label">Runtime</label>
                     <div class="col-8">
-                        <input id="runtime" name="runtime" type="text" required="required" class="form-control">
+                        <input id="movie_runtime" name="runtime" type="text" required="required" class="form-control">
                     </div>
                 </div>
 
-    
+                <div class="form-group row" id="runtime_tv">
+                    <label for="release_type" class="col-4 col-form-label">Number of Seasons</label>
+                    <div class="col-8">
+                        <input id="tv_runtime" name="runtime" type="text" required="required" class="form-control">
+                    </div>
+                </div>
+
 
                 <div class="form-group row">
                     <label class="col-4">Categories</label>
@@ -275,7 +282,20 @@
 
     <script>
     createDatePicker("#release_date");
-    </script> 
+    
+    onChange();
+    
+    function onChange() {
+        var type = document.getElementById("release_type").value;
+        if (type === "movie") {
+            document.getElementById("runtime_tv").style.display = "none";
+            document.getElementById("runtime_mv").style.display = "";
+        } else {
+            document.getElementById("runtime_mv").style.display = "none";
+            document.getElementById("runtime_tv").style.display = "";
+        }
+    }
+    </script>
 
     <?php
 require('includes/footer.php');

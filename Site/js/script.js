@@ -10,6 +10,13 @@ function shareOnFacebook(id) {
     return false;
 }
 
+function lookup(){
+    var value = document.getElementById('search').value;
+    $.getJSON('https://craig.software/webflix/includes/search.php?search=' + value, function(data) {
+        console.log(data[0].title);
+    });
+}
+
 
 function createDatePicker(calander_id) {
     $.noConflict();

@@ -42,7 +42,7 @@ header('Content-Type: text/html; charset=utf-8');
 
     <div>
         <nav>
-            <ul class="nav header">
+            <ul class="nav header" style="margin-bottom: 25px;">
                 <div class="header-banner"></div>
                 <li class="nav-item">
                     <a class="nav-link <?php if ($identifier == 'home') echo 'active'; ?>" href="index.php"><i
@@ -90,7 +90,7 @@ header('Content-Type: text/html; charset=utf-8');
             </ul>
         </nav>
 
-        <br> <br> <br> <br> <br> <br> <br> <br>
+        <br> <br> <br> <br> <br> <br> <br> <br> <br> 
     </div>
 <?php
 handleDialog();

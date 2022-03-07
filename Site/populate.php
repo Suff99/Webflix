@@ -83,7 +83,6 @@ function addTVShows($link, $pages)
                 $sql = "SELECT * FROM `wf_categories` WHERE `name`= '$category->name';";
                 $result = @mysqli_query($link, $sql);
                 while ($row = mysqli_fetch_array($result)) {
-                    ;
                     array_push($categoryIds, $row['id']);
                 }
             }
@@ -236,8 +235,7 @@ function getBackDrop($releaseId, $releaseType)
 // Returns ID of inserted title on success, returns false on fail
 function addExternalRelease($db, $date, $release_title, $tagline, $desc, $trailer_id, $image_json, $release_type, $watch_link, $categories, $additional_info)
 {
-    $titleToReadable = backToReadable($release_title);
-    $titleLookup = "SELECT title FROM wf_releases WHERE title='$titleToReadable'";
+    $titleLookup = "SELECT title FROM wf_releases WHERE title='$release_title'";
     $results = @mysqli_query($db, $titleLookup);
 
     if (!$results) {

@@ -43,7 +43,10 @@ describe('Administration Tasks', () => {
 
                 cy.get('input[id="tagline"]').type(movie.tagline);
                 cy.get('input[id="trailer_id"]').type(movie.trailer);
-                cy.get('input[id="watch_link"]').type(movie.trailer);
+                cy.get('input[id="watch_link"]').type(movie.watch_link);
+                cy.get('div[id="runtime_tv"]').should("not.visible")
+                cy.get('div[id="runtime_mv"]').should("be.visible")
+                cy.get('input[id="movie_runtime"]').type(movie.runtime);
 
 
                 cy.get('#release_date').click()

@@ -50,8 +50,8 @@ function addCategory($db, $category_name, $category_description)
     $addCategoryQuery = "INSERT INTO `wf_categories` (`name`, `description`) VALUES ('$category_name', '$category_description');";
     $result = @mysqli_query($db, $addCategoryQuery);
     if (!$result) {
-        echo "ERROR!</br>";
-        echo "$addCategoryQuery</br></br>";
+        echo "ERROR!<br>";
+        echo "$addCategoryQuery<br><br>";
     }
     return $db->insert_id;
 }
@@ -68,8 +68,8 @@ function addRelease($db, $date, $release_title, $addtional_info_json, $trailer_i
         $addMovieQuery = "INSERT INTO wf_releases(`title`, `additional_info`, `trailer`, `watch_link`, `date`, `images`, `release_type`, `categories`) VALUES ('$release_title','$addtional_info_json','$trailer_id','$watch_link', STR_TO_DATE('$date','%d-%m-%Y'),'$image_json','$release_type','$categories')";
         $result = @mysqli_query($db, $addMovieQuery);
         if (!$result) {
-            echo "ERROR!</br>";
-            echo "$addMovieQuery</br></br>";
+            echo "ERROR!<br>";
+            echo "$addMovieQuery<br><br>";
         }
         return $db->insert_id;
     }
@@ -134,11 +134,11 @@ function changeRole($link, $user, $role)
 function createReleaseCard($movie)
 {
     echo '
-    <div class="col zoom"> <div class="col-sm"> 
+    <div class="col-sm"> 
     <div class="card" style="width: 20rem; margin-bottom: 25px;">';
 
     echo '<a data-toggle="collapse" href="#release_' . $movie['id'] . '" role="button" aria-expanded="false" aria-controls="collapse"><div class="card bg-dark text-white">
-    <img class="card-img" src="' . json_decode($movie['images'])->poster . '" alt="' . $movie['title'] . ' logo" height="50%">
+    <img class="card-img title_image zoom" src="' . json_decode($movie['images'])->poster . '" alt="' . $movie['title'] . ' logo">
     <div class="card-img-overlay">';
     echo '<h1 class="card-title">' . createMovieBadge($movie) . '</h1>';
     echo '<i class="' . ($movie['release_type'] == "movie" ? "bi bi-film" : "bi bi-tv-fill") . '" >' . '</i>
@@ -155,7 +155,7 @@ function createReleaseCard($movie)
     echo '  <a name="info" href="release.php?id=' . $movie['id'] . '" class="btn btn-primary">More Info</a>';
     echo '</div>';
 
-    echo '</div></div></div></div> </br></br></br></br></br></br>';
+    echo '</div></div></div> <br><br><br><br><br><br>';
 }
 
 function makeReadable($text)
