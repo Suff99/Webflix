@@ -6,6 +6,7 @@ defaults:
 env: 
   CYPRESS_email: "${{secrets.CYPRESS_EMAIL}}"
   CYPRESS_password: "${{secrets.CYPRESS_PASSWORD}}"
+  CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 jobs: 
   cypress-chrome: 
     runs-on: ubuntu-latest
@@ -22,6 +23,7 @@ jobs:
         name: "Cypress run (Chrome)"
         uses: cypress-io/github-action@v2
         with: 
+          record: true
           browser: chrome
           install: "npm install"
           working-directory: Tests          
