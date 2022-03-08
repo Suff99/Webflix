@@ -8,7 +8,7 @@ env:
   CYPRESS_password: "${{secrets.CYPRESS_PASSWORD}}"
 jobs: 
   cypress-chrome: 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps: 
       - 
         name: Checkout
@@ -23,41 +23,5 @@ jobs:
         uses: cypress-io/github-action@v2
         with: 
           browser: chrome
-          install: "npm install"
-          working-directory: Tests 
-  cypress-edge: 
-    runs-on: windows-latest
-    steps: 
-      - 
-        name: Checkout
-        uses: actions/checkout@v2
-      - 
-        name: Node
-        uses: actions/setup-node@v2   
-        with: 
-          node-version: '14'   
-      - 
-        name: "Cypress run (Edge)"
-        uses: cypress-io/github-action@v2
-        with: 
-          browser: edge
-          install: "npm install"
-          working-directory: Tests 
-  cypress-firefox: 
-    runs-on: windows-latest
-    steps: 
-      - 
-        name: Checkout
-        uses: actions/checkout@v2
-      - 
-        name: Node
-        uses: actions/setup-node@v2   
-        with: 
-          node-version: '14'   
-      - 
-        name: "Cypress run (Firefox)"
-        uses: cypress-io/github-action@v2
-        with: 
-          browser: firefox
           install: "npm install"
           working-directory: Tests          
