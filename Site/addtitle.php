@@ -87,7 +87,7 @@
     } else {
         session();
         createMetaTags("Admin Panel", "Create and Edit", "");
-        lockPageFromUser();
+        checkForAdmin();
     }
     ?>
 </div>

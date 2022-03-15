@@ -4,7 +4,7 @@
 require('database.php');
 require('util.php');
 session();
-lockPageFromUser();
+checkForAdmin();
 
 $dialogMessage = array();
 $release = confirmGetExistence('release', $link);

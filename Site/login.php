@@ -54,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['last_name'] = $data['last_name'];
         $_SESSION['role'] = $data['role'];
         $_SESSION['username'] = $data['username'];
+        $_SESSION['status'] = $data['status'];
         header('Location: ' . $prev_url);
     } else {
         $errors = $data;

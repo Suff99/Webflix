@@ -5,7 +5,7 @@ Cypress.Cookies.defaults({
     preserve: 'webflix_session',
 })
 
-logout();
+//
 
 describe('Administration Tasks', () => {
     if (Cypress.env("email") && Cypress.env("password")) {

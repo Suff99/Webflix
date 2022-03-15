@@ -70,11 +70,18 @@ function addRelease($db, $date, $release_title, $addtional_info_json, $trailer_i
 
 
 // Should be called within the header of the page, locks out any users that do not have the role "admin"
-function lockPageFromUser()
+function checkForAdmin()
 {
     if (strcmp($_SESSION['role'], "admin") != 0) {
         $error403 = array("You do not have permission to access the intended page.");
         header('Location: ' . 'index.php?error=true&dialog=' . json_encode($error403));
+    }
+}
+
+function blockDisabledAccounts(){
+    if (strcmp($_SESSION['status'], "banned") == 0) {
+        $error403 = array("This account is banned and is not permitted to use this service.");
+        header('Location: ' . 'logout.php?error=true&dialog=' . json_encode($error403));
     }
 }
 
@@ -131,7 +138,7 @@ function createReleaseCard($movie)
     <div class="card" style="width: 20rem; margin-bottom: 25px;">';
 
     echo '<a data-toggle="collapse" href="#release_' . $movie['id'] . '" role="button" aria-expanded="false" aria-controls="collapse"><div class="card bg-dark text-white">
-    <img class="card-img title_image zoom" src="' . json_decode($movie['images'])->poster . '" alt="' . $movie['title'] . ' logo">
+    <img class="card-img title_image zoom" src="' . str_replace("https://image.tmdb.org/t/p/original/","https://image.tmdb.org/t/p/w300_and_h450_bestv2/", json_decode($movie['images'])->poster) . '" alt="' . $movie['title'] . ' logo">
     <div class="card-img-overlay">';
     echo '<h1 class="card-title">' . createMovieBadge($movie) . '</h1>';
     echo '<i class="' . ($movie['release_type'] == "movie" ? "bi bi-film" : "bi bi-tv-fill") . '" >' . '</i>
