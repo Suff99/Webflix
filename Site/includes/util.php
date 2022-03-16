@@ -181,6 +181,12 @@ function getYtIdFromURl($url)
     }
 }
 
+function getAllUsers($db_link){
+    $getUsersQuery = "SELECT * FROM wf_users";
+    $result = @mysqli_query($db_link, $getUsersQuery);
+    return $result;
+}
+
 function createMovieBadge($movie)
 {
     $watch = $movie['watch_link'];
@@ -223,6 +229,7 @@ function handleDialog()
         echo "</div>";
     }
 }
+
 
 function deleteTitle($link, $id)
 {

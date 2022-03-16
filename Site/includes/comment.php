@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $comment = confirmGetExistence('comment', $link);
     $rating = confirmGetExistence('rating', $link);
     $user_id = $_SESSION['user_id'];
-    $release_id = htmlspecialchars($_GET["release_id"]);
+    $release_id = confirmGetExistence('release_id', $link);
 
     if (!$comment) {
         array_push($dialogMessage, "Missing comment text!");

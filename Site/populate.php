@@ -2,6 +2,7 @@
 
 include('includes/util.php');
 include('includes/database.php');
+checkForAdmin();
 
 addMovies($link, 20);
 addTVShows($link, 20);

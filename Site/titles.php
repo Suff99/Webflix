@@ -36,7 +36,7 @@
 
     $movies = mysqli_query($link, $moviesQuery);
     $number_of_result = mysqli_num_rows($movies);
-    $results_per_page = 25;
+    $results_per_page = 20;
     $number_of_page = ceil($number_of_result / $results_per_page);
     $page_first_result = ($currentPage - 1) * $results_per_page;
 
