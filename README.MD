@@ -19,3 +19,12 @@ from the client (i.e. your lecturer), who will be available for a discussion in 
 - [x] Single Movie
 - [x] Single TV Show
 
+# Testing
+In order to test the application against the test demo site at https://craig.software/webflix/
+You will need to:
+- Ensure that you have set up node correctly before this, to do this install node from https://nodejs.org/en/download/ 
+- Open a command window pointing at the root of this project
+- Run ``cd tests``
+- Validate you are in ./tests
+- run ``npx cypress run`` or ``npx cypress open`` 
+- Happy testing 

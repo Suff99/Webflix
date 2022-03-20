@@ -190,7 +190,7 @@ session();
                     <p>Type: Persistent Cookies</p>
                     <p>Administered by: Us</p>
                     <p>Purpose: These Cookies allow us to remember choices You make when You use the Website, such as
-                        remembering your login details or language preference. The purpose of these Cookies is to
+                        remembering your Sign in details or language preference. The purpose of these Cookies is to
                         provide You
                         with a more personal experience and to avoid You having to re-enter your preferences every time
                         You use

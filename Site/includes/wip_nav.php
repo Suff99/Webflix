@@ -43,7 +43,7 @@ header('Content-Type: text/html; charset=utf-8');
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
-    <div class="header-banner"></div>
+    <div class="nav_banner"></div>
 
     <nav class="navbar navbar-expand-lg navbar-custom">
         <a class="navbar-brand" href="#">Webflix</a>
@@ -92,7 +92,7 @@ header('Content-Type: text/html; charset=utf-8');
                     <?php
 
                     if (!isset($_SESSION['username'])) {
-                        echo ' <a class="nav-link' . (($identifier == 'login') ? ' active"' : "") . '" href="login.php"><i class="bi bi-person-plus-fill"></i> Login</a>';
+                        echo ' <a class="nav-link' . (($identifier == 'Sign in') ? ' active"' : "") . '" href="login.php"><i class="bi bi-person-plus-fill"></i> Sign in</a>';
                     } else {
                         echo ' <a class="nav-link' . (($identifier == 'logout') ? ' active"' : "") . '" href="logout.php"><i class="bi bi-person-x-fill"></i> Logout</a>';
                     }

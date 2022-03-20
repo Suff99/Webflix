@@ -149,6 +149,21 @@ describe('Guest User Access', () => {
     })
 })
 
+describe("Test invalid release" , () => {
+
+    it("Visit invalid release", ()=>{
+        cy.visit('release.php?id=-1');
+    })
+
+    it("'Aw Snap!' heading is visible", ()=>{
+        cy.contains('Aw Snap!').should('be.visible');
+    })
+
+    it("'The title you are looking for could not be found...' text is visible", ()=>{
+        cy.contains('The title you are looking for could not be found...').should('be.visible');
+    })
+})
+
 
 // Log out when all tests are done. This ensures that the user is logged out
 // when a new testing session has begun so that the logging in/registration tests do not fail

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <?php
-$identifier = "login";
+$identifier = "Sign in";
 require('includes/database.php');
 require('includes/nav.php');
 require_once('includes/util.php');
@@ -11,7 +11,7 @@ if (isset($_SESSION['username'])) {
     header('Location: ' . 'index.php');
 }
 
-createMetaTags("Login", "Login", "");
+createMetaTags("Sign in", "Sign in", "");
 
 function validate($link, $email = '', $pwd = '')
 {
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
         <p>
-        <h1>Login</h1>
+        <h1>Sign in</h1>
         </p>
     </div>
 
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label class="form-label">Password</label>
                     <input type="password" class="form-control" name="password" placeholder="Password">
                 </div>
-                <button name="login" type="submit" class="btn btn-primary" value="Login">Sign in</button>
+                <button name="Sign in" type="submit" class="btn btn-primary" value="Sign in">Sign in</button>
                 <button type="button" class="btn btn-primary" onclick="window.location.href='register.php';">Register
                 </button>
             </form>

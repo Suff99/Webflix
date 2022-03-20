@@ -137,8 +137,8 @@ function createReleaseCard($movie)
     <div class="col-sm"> 
     <div class="card" style="width: 20rem; margin-bottom: 25px;">';
 
-    echo '<a data-toggle="collapse" href="#release_' . $movie['id'] . '" role="button" aria-expanded="false" aria-controls="collapse"><div class="card bg-dark text-white">
-    <img class="card-img title_image zoom" src="' . str_replace("https://image.tmdb.org/t/p/original/","https://image.tmdb.org/t/p/w300_and_h450_bestv2/", json_decode($movie['images'])->poster) . '" alt="' . $movie['title'] . ' logo">
+    echo '<a data-toggle="collapse" class="zoom" href="#release_' . $movie['id'] . '" role="button" aria-expanded="false" aria-controls="collapse"><div class="card bg-dark text-white">
+    <img class="card-img title_image" src="' . str_replace("https://image.tmdb.org/t/p/original/","https://image.tmdb.org/t/p/w300_and_h450_bestv2/", json_decode($movie['images'])->poster) . '" alt="' . $movie['title'] . ' logo">
     <div class="card-img-overlay">';
     echo '<h1 class="card-title">' . createMovieBadge($movie) . '</h1>';
     echo '<i class="' . ($movie['release_type'] == "movie" ? "bi bi-film" : "bi bi-tv-fill") . '" >' . '</i>

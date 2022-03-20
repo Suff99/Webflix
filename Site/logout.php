@@ -16,6 +16,6 @@ session_destroy();
 ?>
 
 <?php
-echo '<center><h1>Goodbye!</h1><p>You are now logged out.</p><br><a href="login.php"> <button type="button" class="btn btn-primary" role="button"> Login </button></a>  </center>';
+echo '<center><h1>Goodbye!</h1><p>You are now logged out.</p><br><a href="login.php"> <button type="button" class="btn btn-primary" role="button"> Sign in </button></a>  </center>';
 require('includes/footer.php');
 ?>

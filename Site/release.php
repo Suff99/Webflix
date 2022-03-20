@@ -211,7 +211,7 @@ if (isset($_GET['user_id'])) {
             </form>
 
             <div style="<?php echo(isset($_SESSION['user_id']) ? 'display: none' : '') ?>">
-                <center><a type="submit" href="login.php"><h5>Please login to leave a comment</h5></a></center>
+                <center><a type="submit" href="login.php"><h5>Please Sign in to leave a comment</h5></a></center>
             </div>
         </div>
     </div>

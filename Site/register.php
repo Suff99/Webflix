@@ -5,7 +5,7 @@
 
 
     <?php
-$identifier = "login";
+$identifier = "Sign in";
 require('includes/database.php');
 require('includes/nav.php');
 
@@ -62,14 +62,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $selectUser = "SELECT username FROM wf_users WHERE email='$email'";
     $userResults = @mysqli_query($link, $selectUser);
     if (mysqli_num_rows($userResults) != 0) {
-        $potentialErrors[] = 'Email address already registered. <h1 href="login.php">Login</h2>';
+        $potentialErrors[] = 'Email address already registered. <h1 href="login.php">Sign in</h2>';
     }
 
 
     $selectUserName = "SELECT username FROM wf_users WHERE username='$userName'";
     $result = @mysqli_query($link, $selectUserName);
     if (mysqli_num_rows($result) != 0) {
-        $potentialErrors[] = 'Username already registered. <h1 href="login.php">Login</h1>';
+        $potentialErrors[] = 'Username already registered. <h1 href="login.php">Sign in</h1>';
     }
 
 
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (empty($potentialErrors)) {
-        $potentialErrors[] = "Added User! You can now login!";
+        $potentialErrors[] = "Added User! You can now Sign in!";
         addUser($link, $email, $userName, $first_name, $last_name, $password, $dob, $contact);
         header('Location: ' . "login.php?&dialog=" . json_encode($potentialErrors));
     } else {
@@ -144,7 +144,7 @@ function addUser($link, $uEmail, $uUsername, $uFirstName, $uLastName, $uPassword
                     <span class="input-group-text"><i class="bi bi-phone-fill"></i></span>
                     <input type="text" name="contact" id="contact" required="required"
                         pattern="^(((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$"
-                        title="Please enter a valid UK Number beginning with 0" class="form-control">
+                        title="Please enter a valid UK Number beginning with 0 or +44" class="form-control">
                 </div>
             </div>
 

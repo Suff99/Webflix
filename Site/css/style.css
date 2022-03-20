@@ -2,16 +2,25 @@
 
 .zoom {
   transition: transform 0.2s;
-  /* Animation */
-  margin: 0 auto;
 }
 
 .zoom:hover {
-  transform: scale(1.2);
-  z-index: 150;
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+  -webkit-transition: all 0.8s;
+  transition: all 0.8s;
+  opacity:1;
 }
 
 a {
+  text-decoration: none;
+}
+
+a h5 {
+  text-decoration: none;
+}
+
+a:hover {
   text-decoration: none;
 }
 
@@ -30,14 +39,6 @@ a {
 
 ::-webkit-scrollbar-thumb:hover {
   background: silver;
-}
-
-a h5 {
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: none;
 }
 
 h1 {
@@ -249,7 +250,7 @@ body {
   position: relative;
 }
 
-.header-banner {
+.nav_banner {
   background-color: silver;
   background-image: url("https://craig.software/webflix/img/logo.png");
   background-position: center;

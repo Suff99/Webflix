@@ -44,7 +44,7 @@ header('Content-Type: text/html; charset=utf-8');
 <div>
     <nav>
         <ul class="nav header nav_ul" style="margin-bottom: 25px;">
-            <div class="header-banner"></div>
+            <div class="nav_banner"></div>
             <li class="nav-item">
                 <a class="nav-link <?php if ($identifier == 'home') echo 'active'; ?>" href="index.php"><i
                         class="bi bi-film"></i> Home</a>
@@ -82,7 +82,7 @@ header('Content-Type: text/html; charset=utf-8');
                 <?php
 
                     if (!isset($_SESSION['username'])) {
-                        echo ' <a class="nav-link' . (($identifier == 'login') ? ' active"' : "") . '" href="login.php"><i class="bi bi-person-plus-fill"></i> Login</a>';
+                        echo ' <a class="nav-link' . (($identifier == 'Sign in') ? ' active"' : "") . '" href="login.php"><i class="bi bi-person-plus-fill"></i> Sign in</a>';
                     } else {
                         echo ' <a class="nav-link' . (($identifier == 'logout') ? ' active"' : "") . '" href="logout.php"><i class="bi bi-person-x-fill"></i> Logout</a>';
                     }
