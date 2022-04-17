@@ -4,8 +4,8 @@ include('includes/util.php');
 include('includes/database.php');
 checkForAdmin();
 
-addMovies($link, 20);
-addTVShows($link, 20);
+addMovies($link, 10);
+addTVShows($link, 10);
 
 // Parameters: The Movie Database API release ID, Release type (tv/movie)
 // Used to return the key of a YouTube Video that is the trailer of the given release. 
@@ -52,7 +52,7 @@ function addTVShows($link, $pages)
             // Retrieve runtime of the tv show, and format it. If missing, we state that it is unknown due to the title not being released
             $seasons = $tvShow->number_of_seasons;
             if (empty($seasons) || strcmp($seasons, "0") === 0) {
-                $seasons = "Unknown (Title may not be released yet)";
+                $seasons = "N/A";
             } else {
                 $seasons .= " Seasons";
             }
@@ -136,7 +136,7 @@ function addMovies($link, $pages)
             // Retrieve runtime of movie, and format it. If missing, we state that it is unknown due to the title not being released
             $runtime = $movie->runtime;
             if (empty($runtime) || strcmp($runtime, "0") === 0) {
-                $runtime = "Unknown (Title may not be released yet)";
+                $runtime = "N/A";
             } else {
                 $runtime .= " Minutes";
             }

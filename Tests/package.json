@@ -4,11 +4,12 @@
   "description": "Tests for Webflix Web Application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "tests": "echo \"Running Cypress Tests\" && npx cypress open",
+    "tests_headless": "echo \"Running Cypress Tests (Headless)\" && npx cypress run"
   },
-  "author": "Craig",
+  "author": "Craig B",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^9.5.2"
+    "cypress": "^9.5.4"
   }
 }

@@ -72,7 +72,7 @@ describe('Release Selection', () => {
     })
 
     it('Release Card - Show Collapsed Content', () => {
-        cy.get('img[class="card-img title_image zoom"]').first().scrollIntoView().click({force: true})
+        cy.get('img[class="card-img title_image"]').first().scrollIntoView().click({force: true})
     })
 
     it('Release Card - Show Trailer', () => {

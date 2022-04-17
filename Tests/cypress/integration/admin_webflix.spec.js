@@ -5,7 +5,7 @@ Cypress.Cookies.defaults({
     preserve: 'webflix_session',
 })
 
-//
+
 
 describe('Administration Tasks', () => {
     if (Cypress.env("email") && Cypress.env("password")) {
@@ -95,7 +95,7 @@ describe('Administration Tasks', () => {
 function loginViaEnv() {
     it('Logging in (Admin)', () => {
 
-        cy.visit('https://craig.software/webflix/login.php')
+        cy.visit('login.php')
         cy.get('input[name=email]')
             .should('be.visible')
             .type(Cypress.env('email'))

@@ -12,9 +12,9 @@
 
         require('includes/database.php');
         $potentialErrors = array();
-        $title = addslashes(confirmGetExistence('title', $link));
-        $tagline = addslashes(confirmGetExistence('tagline', $link));
-        $description = addslashes(confirmGetExistence('description', $link));
+        $title = confirmGetExistence('title', $link);
+        $tagline = confirmGetExistence('tagline', $link);
+        $description = confirmGetExistence('description', $link);
         $poster_url = confirmGetExistence('poster_url', $link);
         $backdrop_url = confirmGetExistence('backdrop_url', $link);
         $release_type = confirmGetExistence('release_type', $link);
