@@ -10,9 +10,9 @@ function shareOnFacebook(id) {
     return false;
 }
 
-function lookup(){
+function lookup() {
     var value = document.getElementById('search').value;
-    $.getJSON('https://craig.software/webflix/includes/search.php?search=' + value, function(data) {
+    $.getJSON('https://craig.software/webflix/includes/search.php?search=' + value, function (data) {
         console.log(data[0].title);
     });
 }

@@ -34,7 +34,7 @@ header('Content-Type: text/html; charset=utf-8');
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100&display=swap" rel="stylesheet">
-    <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/recurso-sans" type="text/css" />
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/recurso-sans" type="text/css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://kit.fontawesome.com/6e5dac7c84.js" crossorigin="anonymous"></script>
@@ -47,46 +47,46 @@ header('Content-Type: text/html; charset=utf-8');
             <div class="nav_banner"></div>
             <li class="nav-item">
                 <a class="nav-link <?php if ($identifier == 'home') echo 'active'; ?>" href="index.php"><i
-                        class="bi bi-film"></i> Home</a>
+                            class="bi bi-film"></i> Home</a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link <?php if ($identifier == 'about') echo 'active'; ?>" href="about.php"><i
-                        class="bi bi-info-circle-fill"></i> About</a>
+                            class="bi bi-info-circle-fill"></i> About</a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link <?php if ($identifier == 'whatson') echo 'active'; ?>" href="titles.php"><i
-                        class="bi bi-projector-fill"></i> What's on?</a>
+                            class="bi bi-projector-fill"></i> What's on?</a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link <?php if ($identifier == 'movies') echo 'active'; ?>"
-                    href="titles.php?type=movies"><i class="bi bi-film"></i> Movies</a>
+                   href="titles.php?type=movies"><i class="bi bi-film"></i> Movies</a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link <?php if ($identifier == 'tv_shows') echo 'active'; ?>"
-                    href="titles.php?type=series"><i class="bi bi-tv-fill"></i> TV Shows</a>
+                   href="titles.php?type=series"><i class="bi bi-tv-fill"></i> TV Shows</a>
             </li>
 
             <?php
-                session();
+            session();
 
-                if (isset($_SESSION['username']) && strcmp($_SESSION['role'], "admin") == 0) {
-                    echo '<li class="nav-item"> <a class="nav-link' . (($identifier == 'admin') ? ' active"' : "") . '" href="admin.php"><i class="bi bi-shield-fill-check"></i> Admin</a></li>';
-                }
-                ?>
+            if (isset($_SESSION['username']) && strcmp($_SESSION['role'], "admin") == 0) {
+                echo '<li class="nav-item"> <a class="nav-link' . (($identifier == 'admin') ? ' active"' : "") . '" href="admin.php"><i class="bi bi-shield-fill-check"></i> Admin</a></li>';
+            }
+            ?>
 
             <li class="nav-item ml-auto">
                 <?php
 
-                    if (!isset($_SESSION['username'])) {
-                        echo ' <a class="nav-link' . (($identifier == 'Sign in') ? ' active"' : "") . '" href="login.php"><i class="bi bi-person-plus-fill"></i> Sign in</a>';
-                    } else {
-                        echo ' <a class="nav-link' . (($identifier == 'logout') ? ' active"' : "") . '" href="logout.php"><i class="bi bi-person-x-fill"></i> Logout</a>';
-                    }
-                    ?>
+                if (!isset($_SESSION['username'])) {
+                    echo ' <a class="nav-link' . (($identifier == 'Sign in') ? ' active"' : "") . '" href="login.php"><i class="bi bi-person-plus-fill"></i> Sign in</a>';
+                } else {
+                    echo ' <a class="nav-link' . (($identifier == 'logout') ? ' active"' : "") . '" href="logout.php"><i class="bi bi-person-x-fill"></i> Logout</a>';
+                }
+                ?>
             </li>
         </ul>
     </nav>
@@ -96,6 +96,6 @@ header('Content-Type: text/html; charset=utf-8');
 <?php
 handleDialog();
 if (isset($_SESSION['username']) && $identifier != 'logout') {
-blockDisabledAccounts();
+    blockDisabledAccounts();
 }
 ?>

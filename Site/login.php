@@ -55,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['role'] = $data['role'];
         $_SESSION['username'] = $data['username'];
         $_SESSION['status'] = $data['status'];
+        clearResetCode($link, $data['email']);
         header('Location: ' . $prev_url);
     } else {
         $errors = $data;

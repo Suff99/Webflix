@@ -59,13 +59,13 @@ function addCategory($db, $category_name, $category_description)
 // Registers a new release 
 function addRelease($db, $date, $release_title, $addtional_info_json, $trailer_id, $image_json, $release_type, $watch_link, $categories)
 {
-        $addMovieQuery = "INSERT INTO wf_releases(`title`, `additional_info`, `trailer`, `watch_link`, `date`, `images`, `release_type`, `categories`) VALUES ('$release_title','$addtional_info_json','$trailer_id','$watch_link', STR_TO_DATE('$date','%d-%m-%Y'),'$image_json','$release_type','$categories')";
-        $result = @mysqli_query($db, $addMovieQuery);
-        if (!$result) {
-            echo "ERROR!<br>";
-            echo "$addMovieQuery<br><br>";
-        }
-        return $db->insert_id;
+    $addMovieQuery = "INSERT INTO wf_releases(`title`, `additional_info`, `trailer`, `watch_link`, `date`, `images`, `release_type`, `categories`) VALUES ('$release_title','$addtional_info_json','$trailer_id','$watch_link', STR_TO_DATE('$date','%d-%m-%Y'),'$image_json','$release_type','$categories')";
+    $result = @mysqli_query($db, $addMovieQuery);
+    if (!$result) {
+        echo "ERROR!<br>";
+        echo "$addMovieQuery<br><br>";
+    }
+    return $db->insert_id;
 }
 
 
@@ -78,7 +78,8 @@ function checkForAdmin()
     }
 }
 
-function blockDisabledAccounts(){
+function blockDisabledAccounts()
+{
     if (strcmp($_SESSION['status'], "banned") == 0) {
         $error403 = array("This account is banned and is not permitted to use this service.");
         header('Location: ' . 'logout.php?error=true&dialog=' . json_encode($error403));
@@ -138,7 +139,7 @@ function createReleaseCard($movie)
     <div class="card" style="width: 20rem; margin-bottom: 25px;">';
 
     echo '<a data-toggle="collapse" class="zoom" href="#release_' . $movie['id'] . '" role="button" aria-expanded="false" aria-controls="collapse"><div class="card bg-dark text-white">
-    <img class="card-img title_image" src="' . str_replace("https://image.tmdb.org/t/p/original/","https://image.tmdb.org/t/p/w300_and_h450_bestv2/", json_decode($movie['images'])->poster) . '" alt="' . rawurldecode($movie['title']) . ' logo">
+    <img class="card-img title_image" src="' . str_replace("https://image.tmdb.org/t/p/original/", "https://image.tmdb.org/t/p/w300_and_h450_bestv2/", json_decode($movie['images'])->poster) . '" alt="' . rawurldecode($movie['title']) . ' logo">
     <div class="card-img-overlay">';
     echo '<h1 class="card-title">' . createMovieBadge($movie) . '</h1>';
     echo '<i class="' . ($movie['release_type'] == "movie" ? "bi bi-film" : "bi bi-tv-fill") . '" >' . '</i>
@@ -181,7 +182,8 @@ function getYtIdFromURl($url)
     }
 }
 
-function getAllUsers($db_link){
+function getAllUsers($db_link)
+{
     $getUsersQuery = "SELECT * FROM wf_users";
     $result = @mysqli_query($db_link, $getUsersQuery);
     return $result;
@@ -230,6 +232,17 @@ function handleDialog()
     }
 }
 
+function generateRandomString($length = 10)
+{
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+
 
 function deleteTitle($link, $id)
 {
@@ -256,4 +269,9 @@ function deleteCommentsFromTitle($link, $id)
 {
     $delComment = "DELETE FROM `webflix_db`.`wf_comments` WHERE  `release_id`=$id";
     $result = @mysqli_query($link, $delComment);
+}
+
+function clearResetCode($link, $email){
+    $query = "UPDATE `wf_users` SET `password_reset`='' WHERE `email` = '$email';";
+    $result = mysqli_query($link, $query);
 }

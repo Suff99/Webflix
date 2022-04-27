@@ -10,27 +10,28 @@ if (!isset($_SESSION['username'])) {
     header('Location: ' . '../login.php?error=true&dialog=' . json_encode($dialogMessage));
 }
 
-function query_to_csv($db_conn, $query, $filename, $attachment = false, $headers = true) {
-       
-    if($attachment) {
-        header( 'Content-Type: text/csv' );
-        header( 'Content-Disposition: attachment;filename='.$filename);
+function query_to_csv($db_conn, $query, $filename, $attachment = false, $headers = true)
+{
+
+    if ($attachment) {
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment;filename=' . $filename);
         $fp = fopen('php://output', 'w');
     } else {
         $fp = fopen($filename, 'w');
     }
-   
-    $result = mysqli_query($db_conn, $query) or die( mysqli_error( $db_conn ) );
-   
-    if($headers) {
+
+    $result = mysqli_query($db_conn, $query) or die(mysqli_error($db_conn));
+
+    if ($headers) {
         $row = mysqli_fetch_assoc($result);
-        if($row) {
+        if ($row) {
             fputcsv($fp, array_keys($row));
             mysqli_data_seek($result, 0);
         }
     }
-   
-    while($row = mysqli_fetch_assoc($result)) {
+
+    while ($row = mysqli_fetch_assoc($result)) {
         fputcsv($fp, $row);
     }
 

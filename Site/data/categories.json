@@ -1,130 +1,129 @@
 {
-	"categories":
-	[
-		{
-			"id": 1,
-			"name": "Action",
-			"description": null
-		},
-		{
-			"id": 2,
-			"name": "Adventure",
-			"description": null
-		},
-		{
-			"id": 3,
-			"name": "Animation",
-			"description": null
-		},
-		{
-			"id": 4,
-			"name": "Comedy",
-			"description": null
-		},
-		{
-			"id": 5,
-			"name": "Crime",
-			"description": null
-		},
-		{
-			"id": 6,
-			"name": "Documentary",
-			"description": null
-		},
-		{
-			"id": 7,
-			"name": "Drama",
-			"description": null
-		},
-		{
-			"id": 8,
-			"name": "Family",
-			"description": null
-		},
-		{
-			"id": 9,
-			"name": "Fantasy",
-			"description": null
-		},
-		{
-			"id": 10,
-			"name": "History",
-			"description": null
-		},
-		{
-			"id": 11,
-			"name": "Horror",
-			"description": null
-		},
-		{
-			"id": 12,
-			"name": "Music",
-			"description": null
-		},
-		{
-			"id": 13,
-			"name": "Mystery",
-			"description": null
-		},
-		{
-			"id": 14,
-			"name": "Romance",
-			"description": null
-		},
-		{
-			"id": 15,
-			"name": "Science Fiction",
-			"description": null
-		},
-		{
-			"id": 16,
-			"name": "TV Movie",
-			"description": null
-		},
-		{
-			"id": 17,
-			"name": "Thriller",
-			"description": null
-		},
-		{
-			"id": 18,
-			"name": "War",
-			"description": null
-		},
-		{
-			"id": 19,
-			"name": "Western",
-			"description": null
-		},
-		{
-			"id": 20,
-			"name": "Action & Adventure",
-			"description": null
-		},
-		{
-			"id": 21,
-			"name": "War & Politics",
-			"description": null
-		},
-		{
-			"id": 22,
-			"name": "Sci-Fi & Fantasy",
-			"description": null
-		},
-		{
-			"id": 23,
-			"name": "News",
-			"description": null
-		},
-		{
-			"id": 24,
-			"name": "Soap",
-			"description": null
-		},
-		{
-			"id": 25,
-			"name": "Talk",
-			"description": null
-		}
-	]
+  "categories": [
+    {
+      "id": 1,
+      "name": "Action",
+      "description": null
+    },
+    {
+      "id": 2,
+      "name": "Adventure",
+      "description": null
+    },
+    {
+      "id": 3,
+      "name": "Animation",
+      "description": null
+    },
+    {
+      "id": 4,
+      "name": "Comedy",
+      "description": null
+    },
+    {
+      "id": 5,
+      "name": "Crime",
+      "description": null
+    },
+    {
+      "id": 6,
+      "name": "Documentary",
+      "description": null
+    },
+    {
+      "id": 7,
+      "name": "Drama",
+      "description": null
+    },
+    {
+      "id": 8,
+      "name": "Family",
+      "description": null
+    },
+    {
+      "id": 9,
+      "name": "Fantasy",
+      "description": null
+    },
+    {
+      "id": 10,
+      "name": "History",
+      "description": null
+    },
+    {
+      "id": 11,
+      "name": "Horror",
+      "description": null
+    },
+    {
+      "id": 12,
+      "name": "Music",
+      "description": null
+    },
+    {
+      "id": 13,
+      "name": "Mystery",
+      "description": null
+    },
+    {
+      "id": 14,
+      "name": "Romance",
+      "description": null
+    },
+    {
+      "id": 15,
+      "name": "Science Fiction",
+      "description": null
+    },
+    {
+      "id": 16,
+      "name": "TV Movie",
+      "description": null
+    },
+    {
+      "id": 17,
+      "name": "Thriller",
+      "description": null
+    },
+    {
+      "id": 18,
+      "name": "War",
+      "description": null
+    },
+    {
+      "id": 19,
+      "name": "Western",
+      "description": null
+    },
+    {
+      "id": 20,
+      "name": "Action & Adventure",
+      "description": null
+    },
+    {
+      "id": 21,
+      "name": "War & Politics",
+      "description": null
+    },
+    {
+      "id": 22,
+      "name": "Sci-Fi & Fantasy",
+      "description": null
+    },
+    {
+      "id": 23,
+      "name": "News",
+      "description": null
+    },
+    {
+      "id": 24,
+      "name": "Soap",
+      "description": null
+    },
+    {
+      "id": 25,
+      "name": "Talk",
+      "description": null
+    }
+  ]
 }
