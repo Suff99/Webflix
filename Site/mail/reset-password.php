@@ -10,6 +10,13 @@ $resetCode = generateRandomString();
 
 $dialogMessage = [];
 
+if (isset($_SESSION['username'])) {
+    $dialogMessage = array("You are already logged in.");
+    header('Location: ' . '../index.php?error=false&dialog=' . json_encode($dialogMessage));
+    die();
+}
+
+
 $email = "craigtbalmer@gmail.com";
 
 $message = "
@@ -43,10 +50,10 @@ $sent = sendEmail($email, $subject, $message, $headers);
 if ($sent) {
     $dialogMessage = array("Email sent! Please check your spam folder!");
     createSaveResetCode($link, $resetCode, $email);
-    header('Location: ' . '../login.php?error=false&dialog=' . json_encode($dialogMessage));
+  //  header('Location: ' . '../login.php?error=false&dialog=' . json_encode($dialogMessage));
 } else {
     $dialogMessage = array("Account does not exist with that email!");
-    header('Location: ' . '../login.php?error=false&dialog=' . json_encode($dialogMessage));
+   // header('Location: ' . '../login.php?error=false&dialog=' . json_encode($dialogMessage));
 }
 
 
