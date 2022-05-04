@@ -18,8 +18,7 @@ public class Generate {
 
     private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.41 Safari/537.36";
     public static Gson GSON = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
-    public static String API_KEY = "5cd5948d48817e54d6fb43905f56a80f";
-
+    public static String API_KEY = "";
     public static Config CONFIG = new Config();
     public static SQL SQL = new SQL();
 
@@ -29,15 +28,19 @@ public class Generate {
         CONFIG.readConfig();
 
         SQL.connect(CONFIG.getDatabaseUrl(), CONFIG.getDatabaseUser(), CONFIG.getDatabasePassword());
+
+        API_KEY = CONFIG.getApiKey();
+
         SQL.resetDatabase();
 
         for (ReleaseType value : ReleaseType.values()) {
-            getReleases(10, value);
+            getReleases(30, value);
         }
 
         System.out.println("Done!");
         System.exit(0);
     }
+
 
 
     public static ArrayList<Release> getReleases(int pages, ReleaseType releaseType) throws IOException {
@@ -51,8 +54,12 @@ public class Generate {
                 Release release = new Release(releaseType, releaseData);
                 release.setVideoString(videoString);
                 releases.add(release);
-                addReleaseToDb(release);
-                System.out.println("Created: " + release.getTitle());
+                if(!releaseData.get("adult").getAsBoolean()) {
+                    addReleaseToDb(release);
+                    System.out.println("Created: " + release.getTitle() + "\n" + release);
+                } else {
+                    System.out.println("Did not add " + release.getTitle() + ", as it is a adult movie!");
+                }
             }
         }
         return releases;
@@ -65,7 +72,7 @@ public class Generate {
         try {
             result = getApiResponse(new URL(releaseInfo));
         } catch (IOException e) {
-            //throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
         return result;
     }
@@ -81,8 +88,8 @@ public class Generate {
         return parse(br);
     }
 
-    public static JsonObject parse(Reader p_212744_0_) {
-        return GSON.fromJson(p_212744_0_, JsonObject.class);
+    public static JsonObject parse(Reader reader) {
+        return GSON.fromJson(reader, JsonObject.class);
     }
 
 

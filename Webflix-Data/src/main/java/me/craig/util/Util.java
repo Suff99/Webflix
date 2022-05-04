@@ -10,6 +10,8 @@ import me.craig.release.ReleaseType;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -49,8 +51,13 @@ public class Util {
     }
 
     public static void addReleaseToDb(Release release) {
-        String query = "INSERT INTO wf_releases(`title`, `tagline`, `description`, `trailer`,`watch_link`, `date`, `images`, `release_type`, `categories`, `additional_info`) VALUES ('" + release.getTitle() + "','" + release.getTagline() + "','" + release.getDescription() + "','" + release.getVideo() + "','" + release.getHomepageUrl() + "','" + release.getDate() + "','" + release.imageJson() + "','" + release.getReleaseType().getInternal() + "','" + Generate.GSON.toJson(release.getCategoryIds()) + "','" + release.moreInfo() + "')";
+        String query = "INSERT INTO wf_releases(`title`, `tagline`, `description`, `trailer`,`watch_link`, `date`, `images`, `release_type`, `categories`, `additional_info`) VALUES ('" + ensureUtf8(release.getTitle()) + "','" + ensureUtf8(release.getTagline()) + "','" + ensureUtf8(release.getDescription()) + "','" + release.getVideo() + "','" + ensureUtf8(release.getHomepageUrl()) + "','" + release.getDate() + "','" + release.imageJson() + "','" + release.getReleaseType().getInternal() + "','" + Generate.GSON.toJson(release.getCategoryIds()) + "','" + release.moreInfo() + "')";
         Generate.SQL.executeUpdate(query);
+    }
+
+    public static String ensureUtf8(String s){
+        ByteBuffer buffer = StandardCharsets.UTF_8.encode(s.replace("'","''"));
+        return StandardCharsets.UTF_8.decode(buffer).toString();
     }
 
     public static String getVideoForRelease(ReleaseType releaseType, int id) {
@@ -65,7 +72,7 @@ public class Util {
                 }
             }
         } catch (IOException e) {
-         //   throw new RuntimeException(e);
+            //   throw new RuntimeException(e);
         }
         return "n5Q4Y5nLvrg";
     }

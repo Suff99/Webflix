@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import me.craig.util.Util;
 
+import java.util.Arrays;
+
 public class Release {
 
     private final String date;
@@ -27,8 +29,8 @@ public class Release {
         this.backdropUrl = jsonElement.get("backdrop_path").isJsonNull() ? "" : jsonElement.get("backdrop_path").getAsString();
         this.posterUrl = jsonElement.get("poster_path").isJsonNull() ? "" : jsonElement.get("poster_path").getAsString();
         this.homepageUrl = jsonElement.get("homepage").getAsString();
-        if(jsonElement.get(isTv ? "first_air_date" : "release_date").isJsonNull()){
-            this.date = "Unreleased!";
+        if (jsonElement.get(isTv ? "first_air_date" : "release_date").isJsonNull()) {
+            this.date = "00-00-00";
         } else {
             this.date = jsonElement.get(isTv ? "first_air_date" : "release_date").getAsJsonPrimitive().getAsString();
         }
@@ -126,6 +128,24 @@ public class Release {
         jsonObject.add("poster", new JsonPrimitive("https://image.tmdb.org/t/p/original" + getPosterUrl()));
         jsonObject.add("backdrop", new JsonPrimitive("https://image.tmdb.org/t/p/original" + getBackdropUrl()));
         return jsonObject;
+    }
+
+    @Override
+    public String toString() {
+        return "Release{" +
+                "date='" + date + '\'' +
+                ", releaseType=" + releaseType +
+                ", title='" + title + '\'' +
+                ", tagline='" + tagline + '\'' +
+                ", description='" + description + '\'' +
+                ", backdropUrl='" + backdropUrl + '\'' +
+                ", posterUrl='" + posterUrl + '\'' +
+                ", homepageUrl='" + homepageUrl + '\'' +
+                ", categoryIds=" + Arrays.toString(categoryIds) +
+                ", languages=" + Arrays.toString(languages) +
+                ", video='" + video + '\'' +
+                ", length='" + length + '\'' +
+                '}';
     }
 
     public JsonObject moreInfo() {

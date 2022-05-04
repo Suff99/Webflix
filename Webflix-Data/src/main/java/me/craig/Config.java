@@ -6,6 +6,8 @@ import java.io.*;
 
 public class Config {
 
+    private String API_KEY, DATABASE_USERNAME, DATABASE_PASSWORD , DATABASE_URL= "";
+
     public String getApiKey() {
         return API_KEY;
     }
@@ -22,15 +24,10 @@ public class Config {
         return DATABASE_URL;
     }
 
-    private String API_KEY = "";
-    private String DATABASE_USERNAME = "";
-    private String DATABASE_PASSWORD = "";
-    private String DATABASE_URL = "";
-
-    public void writeConfigIfNotPresent(){
+    public void writeConfigIfNotPresent() {
         File file = new File("./config.json");
         try {
-            if(file.exists()) return;
+            if (file.exists()) return;
             FileWriter writer = new FileWriter(file);
             Generate.GSON.toJson(this, writer);
             writer.close();
@@ -39,7 +36,7 @@ public class Config {
         }
     }
 
-    public void readConfig(){
+    public void readConfig() {
         File file = new File("./config.json");
         JsonObject json = null;
         try {
