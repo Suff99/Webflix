@@ -10,6 +10,6 @@
   "author": "Craig B",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^9.6.0"
+    "cypress": "^9.6.1"
   }
 }

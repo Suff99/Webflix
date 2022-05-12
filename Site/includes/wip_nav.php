@@ -56,27 +56,27 @@ header('Content-Type: text/html; charset=utf-8');
 
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link <?php if ($identifier == 'home') echo 'active'; ?>" href="index.php"><i
+                    <a class="nav-link <?php if ($pageIdentifier == 'home') echo 'active'; ?>" href="index.php"><i
                                 class="bi bi-film"></i> Home</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link <?php if ($identifier == 'about') echo 'active'; ?>" href="about.php"><i
+                    <a class="nav-link <?php if ($pageIdentifier == 'about') echo 'active'; ?>" href="about.php"><i
                                 class="bi bi-info-circle-fill"></i> About</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link <?php if ($identifier == 'whatson') echo 'active'; ?>" href="titles.php"><i
+                    <a class="nav-link <?php if ($pageIdentifier == 'whatson') echo 'active'; ?>" href="titles.php"><i
                                 class="bi bi-projector-fill"></i> What's on?</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link <?php if ($identifier == 'movies') echo 'active'; ?>"
+                    <a class="nav-link <?php if ($pageIdentifier == 'movies') echo 'active'; ?>"
                        href="titles.php?type=movies"><i class="bi bi-film"></i> Movies</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link <?php if ($identifier == 'tv_shows') echo 'active'; ?>"
+                    <a class="nav-link <?php if ($pageIdentifier == 'tv_shows') echo 'active'; ?>"
                        href="titles.php?type=series"><i class="bi bi-tv-fill"></i> TV Shows</a>
                 </li>
 
@@ -84,7 +84,7 @@ header('Content-Type: text/html; charset=utf-8');
                 session();
 
                 if (isset($_SESSION['username']) && strcmp($_SESSION['role'], "admin") == 0) {
-                    echo '<li class="nav-item"> <a class="nav-link' . (($identifier == 'admin') ? ' active"' : "") . '" href="admin.php"><i class="bi bi-shield-fill-check"></i> Admin</a></li>';
+                    echo '<li class="nav-item"> <a class="nav-link' . (($pageIdentifier == 'admin') ? ' active"' : "") . '" href="admin.php"><i class="bi bi-shield-fill-check"></i> Admin</a></li>';
                 }
                 ?>
 
@@ -92,9 +92,9 @@ header('Content-Type: text/html; charset=utf-8');
                     <?php
 
                     if (!isset($_SESSION['username'])) {
-                        echo ' <a class="nav-link' . (($identifier == 'Sign in') ? ' active"' : "") . '" href="login.php"><i class="bi bi-person-plus-fill"></i> Sign in</a>';
+                        echo ' <a class="nav-link' . (($pageIdentifier == 'Sign in') ? ' active"' : "") . '" href="login.php"><i class="bi bi-person-plus-fill"></i> Sign in</a>';
                     } else {
-                        echo ' <a class="nav-link' . (($identifier == 'logout') ? ' active"' : "") . '" href="logout.php"><i class="bi bi-person-x-fill"></i> Logout</a>';
+                        echo ' <a class="nav-link' . (($pageIdentifier == 'logout') ? ' active"' : "") . '" href="logout.php"><i class="bi bi-person-x-fill"></i> Logout</a>';
                     }
                     ?>
                 </li>

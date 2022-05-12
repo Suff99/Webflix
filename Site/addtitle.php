@@ -4,7 +4,7 @@
 <h1>Add Title</h1>
 <div class="header">
     <?php
-    $identifier = "admin";
+    $pageIdentifier = "admin";
     require('includes/database.php');
     require('includes/nav.php');
 

@@ -55,8 +55,8 @@ public class Util {
         Generate.SQL.executeUpdate(query);
     }
 
-    public static String ensureUtf8(String s){
-        ByteBuffer buffer = StandardCharsets.UTF_8.encode(s.replace("'","''"));
+    public static String ensureUtf8(String s) {
+        ByteBuffer buffer = StandardCharsets.UTF_8.encode(s.replace("'", "''"));
         return StandardCharsets.UTF_8.decode(buffer).toString();
     }
 

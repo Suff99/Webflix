@@ -14,6 +14,9 @@ function login() {
 };
 
 describe("Banned Users", () => {
+    afterEach(() => {
+        cy.screenshot()
+      })
     it("Validate Banned users cannot access web application", () => {
         login();
         cy.contains("This account is banned and is not permitted to use this service.").should('exist').should('be.visible')

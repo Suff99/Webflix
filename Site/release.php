@@ -19,7 +19,7 @@
     }
 
 
-    $identifier = 'release';
+    $pageIdentifier = 'release';
     require('includes/nav.php');
     session();
     if (isset($movie)) {

@@ -3,7 +3,7 @@
 
 <head>
     <?php
-    $identifier = "admin";
+    $pageIdentifier = "admin";
     require('includes/database.php');
     require('includes/nav.php');
     createMetaTags("Admin Panel", "Admin Panel", "");

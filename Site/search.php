@@ -3,7 +3,7 @@
 
 <head>
     <?php
-    $identifier = "search";
+    $pageIdentifier = "search";
     $title = "Search";
     require('includes/database.php');
     require('includes/nav.php');

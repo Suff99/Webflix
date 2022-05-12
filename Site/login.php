@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <?php
-$identifier = "Sign in";
+$pageIdentifier = "Sign in";
 require('includes/database.php');
 require('includes/nav.php');
 require_once('includes/util.php');

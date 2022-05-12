@@ -5,7 +5,7 @@
 
 
 <?php
-$identifier = "Sign in";
+$pageIdentifier = "Sign in";
 require('includes/database.php');
 require('includes/nav.php');
 

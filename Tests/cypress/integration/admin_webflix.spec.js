@@ -8,6 +8,11 @@ Cypress.Cookies.defaults({
 
 
 describe('Administration Tasks', () => {
+
+    afterEach(() => {
+        cy.screenshot()
+      })
+
     if (Cypress.env("email") && Cypress.env("password")) {
 
         loginViaEnv();
@@ -63,8 +68,6 @@ describe('Administration Tasks', () => {
                     cy.get('select[id="select_categories"]').select(movie.categories[0]);
                   }
 
-
-                cy.screenshot()
 
                 cy.get('button[type="submit"]').click()
             })

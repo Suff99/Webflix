@@ -1,6 +1,6 @@
 <?php
 
-$identifier = 'logout';
+$pageIdentifier = 'logout';
 $title = "Logged out";
 $description = "You are logged out..";
 require('includes/database.php');

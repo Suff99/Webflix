@@ -42,7 +42,6 @@ public class Generate {
     }
 
 
-
     public static ArrayList<Release> getReleases(int pages, ReleaseType releaseType) throws IOException {
         ArrayList<Release> releases = new ArrayList<>();
         for (int i = 1; i < pages; i++) {
@@ -54,7 +53,7 @@ public class Generate {
                 Release release = new Release(releaseType, releaseData);
                 release.setVideoString(videoString);
                 releases.add(release);
-                if(!releaseData.get("adult").getAsBoolean()) {
+                if (!releaseData.get("adult").getAsBoolean()) {
                     addReleaseToDb(release);
                     System.out.println("Created: " + release.getTitle() + "\n" + release);
                 } else {

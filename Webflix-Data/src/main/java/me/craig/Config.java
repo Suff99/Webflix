@@ -6,7 +6,7 @@ import java.io.*;
 
 public class Config {
 
-    private String API_KEY, DATABASE_USERNAME, DATABASE_PASSWORD , DATABASE_URL= "";
+    private String API_KEY, DATABASE_USERNAME, DATABASE_PASSWORD, DATABASE_URL = "";
 
     public String getApiKey() {
         return API_KEY;

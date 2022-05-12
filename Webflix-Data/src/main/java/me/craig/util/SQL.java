@@ -17,7 +17,7 @@ public class SQL {
         try {
             connection = DriverManager.getConnection(connectionUrl, userName, password);
         } catch (SQLException e) {
-       //     throw new RuntimeException(e);
+            //     throw new RuntimeException(e);
         }
     }
 
@@ -26,7 +26,7 @@ public class SQL {
             PreparedStatement ps = connection.prepareStatement(query);
             int rs = ps.executeUpdate();
         } catch (SQLException e) {
-        //     throw new RuntimeException(e);
+            //     throw new RuntimeException(e);
         }
     }
 

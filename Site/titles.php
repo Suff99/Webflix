@@ -10,7 +10,7 @@ if (!isset($_GET['page'])) {
     $currentPage = $_GET['page'];
 }
 
-$identifier = "whatson";
+$pageIdentifier = "whatson";
 $title = "All Titles!";
 $moviesQuery = "SELECT * FROM `wf_releases` ORDER BY `wf_releases`.`date` DESC";
 
@@ -19,13 +19,13 @@ if (isset($_GET['type'])) {
     $type = $_GET['type'];
     if (strcmp($type, "movies") == 0) {
         $moviesQuery = "SELECT * FROM wf_releases where release_type = 'movie'";
-        $identifier = "movies";
+        $pageIdentifier = "movies";
         $title = "Movies!";
     }
 
     if (strcmp($type, "series") == 0) {
         $moviesQuery = "SELECT * FROM wf_releases where release_type = 'series'";
-        $identifier = "tv_shows";
+        $pageIdentifier = "tv_shows";
         $title = "TV Shows!";
     }
 }

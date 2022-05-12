@@ -12,6 +12,10 @@ Cypress.Screenshot.defaults({
 // Testing whether a user can successfully use the registration form.
 describe('Registration', () => {
 
+    afterEach(() => {
+        cy.screenshot()
+      })
+
     it('successfully loads', () => {
         cy.visit('register.php')
     })
@@ -56,7 +60,6 @@ describe('Registration', () => {
         cy.get('button[name="register"]')
             .should('be.visible')
             .click()
-        cy.screenshot()      
     })
 })
 
@@ -66,6 +69,10 @@ describe('Log in', () => {
 
 
 describe('Release Selection', () => {
+
+    afterEach(() => {
+        cy.screenshot()
+      })
 
     it('All Titles - Page Loads', () => {
         cy.visit("titles.php?type=movies")
@@ -88,6 +95,10 @@ describe('Release Selection', () => {
 })
 
 describe('Review', () => {
+
+    afterEach(() => {
+        cy.screenshot()
+      })
 
     const commentContent = "Wow! This was such a good movie!";
 
@@ -127,29 +138,37 @@ describe('Review', () => {
         cy.visit('admin.php')
         cy.contains("You do not have permission to access the intended page.")
             .should('exist')
-        cy.screenshot();    
     })
 })
 
 
 describe('Guest User Access', () => {
 
-    logout();
+    afterEach(() => {
+        cy.screenshot()
+      })
 
-    it('Validates guest users cannot access administration pages', () => {
-        cy.visit('admin.php')
-        cy.contains("You do not have permission to access the intended page.")
-            .should('exist')
-    })
+    logout();
 
     it('Validates guest users cannot make comments on releases', () => {
         cy.visit('release.php?id=1')
         cy.get('button[name="add_comment"]')
             .should('not.visible')
     })
+
+    it('Validates guest users cannot access administration pages', () => {
+        cy.visit('admin.php')
+        cy.contains("You do not have permission to access the intended page.")
+            .should('exist')
+    })
 })
 
 describe("Test invalid release" , () => {
+
+    afterEach(() => {
+        cy.screenshot()
+      })
+
 
     it("Visit invalid release", ()=>{
         cy.visit('release.php?id=-1');
