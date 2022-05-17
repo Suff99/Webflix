@@ -3,6 +3,7 @@ Tests/node_modules/
 *.mp4
 .idea/
 /Tests/cypress.env.json
+/Tests/cypress/screenshots
 Webflix-Data/.gradle
 Webflix-Data/build
 

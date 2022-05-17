@@ -38,6 +38,7 @@ function confirmGetExistence($value, $sql)
 }
 
 
+// Saves a comment to the database with the associated movie 
 function addComment($link, $r_comment, $r_rating, $r_userid, $r_release_id)
 {
     $addCommentQ = "INSERT INTO `wf_comments` (`message`, `rating`, `release_id`, `user_id`, `date`) VALUES ('$r_comment', '$r_rating', '$r_release_id', '$r_userid', now());";
@@ -78,6 +79,15 @@ function checkForAdmin()
     }
 }
 
+function checkForPaid()
+{
+    if (strcmp($_SESSION['status'], "paid") != 0 && strcmp($_SESSION['role'], "admin") != 0) {
+        $error403 = array("You must have premium to access this page!");
+        header('Location: ' . 'index.php?error=true&dialog=' . json_encode($error403));
+    }
+}
+
+// Blocks disabled accounts being allowed to access the web application
 function blockDisabledAccounts()
 {
     if (strcmp($_SESSION['status'], "banned") == 0) {
@@ -86,6 +96,7 @@ function blockDisabledAccounts()
     }
 }
 
+// Get's the URl of the current page the user is on
 function getUrl()
 {
     $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -124,36 +135,43 @@ function createMetaTags($title, $description, $thumbnail)
     echo '<link rel="icon" type="image/png" href="' . $thumbnail . '"/>' . PHP_EOL;
 }
 
+function addUser($link, $uEmail, $uUsername, $uFirstName, $uLastName, $uPassword, $uDob, $uContact)
+{
+    $userInsert = "INSERT INTO wf_users (`email`, `username`, `first_name`, `last_name`, `password`, `registration`, `dob`, `contact_no`) VALUES ('$uEmail', '$uUsername', '$uFirstName', '$uLastName', SHA2('$uPassword',256), now(), STR_TO_DATE('$uDob','%d-%m-%Y'), '$uContact');";
+    echo $userInsert;
+    $addUser = @mysqli_query($link, $userInsert);
+}
+
 // Change User Role (user/admin)
 function changeRole($link, $user, $role)
 {
     $updateRoleQuerty = "UPDATE `webflix_db`.`wf_users` SET `role`='$role' WHERE  `user_id`=$user;";
-    printf($updateRoleQuerty);
     $result = @mysqli_query($link, $updateRoleQuerty);
 }
 
-function createReleaseCard($movie)
+// Create a front end card of a release
+function createReleaseCard($release)
 {
     echo '
     <div class="col-sm"> 
     <div class="card" style="width: 20rem; margin-bottom: 25px;">';
 
-    echo '<a data-toggle="collapse" class="zoom" href="#release_' . $movie['id'] . '" role="button" aria-expanded="false" aria-controls="collapse"><div class="card bg-dark text-white">
-    <img class="card-img title_image" src="' . str_replace("https://image.tmdb.org/t/p/original/", "https://image.tmdb.org/t/p/w300_and_h450_bestv2/", json_decode($movie['images'])->poster) . '" alt="' . rawurldecode($movie['title']) . ' logo">
+    echo '<a data-toggle="collapse" class="zoom" href="#release_' . $release['id'] . '" role="button" aria-expanded="false" aria-controls="collapse"><div class="card bg-dark text-white">
+    <img class="card-img title_image" src="' . str_replace("https://image.tmdb.org/t/p/original/", "https://image.tmdb.org/t/p/w300_and_h450_bestv2/", json_decode($release['images'])->poster) . '" alt="' . rawurldecode($release['title']) . ' logo">
     <div class="card-img-overlay">';
-    echo '<h1 class="card-title">' . createMovieBadge($movie) . '</h1>';
-    echo '<i class="' . ($movie['release_type'] == "movie" ? "bi bi-film" : "bi bi-tv-fill") . '" >' . '</i>
+    echo '<h1 class="card-title">' . createMovieBadge($release) . '</h1>';
+    echo '<i class="' . ($release['release_type'] == "movie" ? "bi bi-film" : "bi bi-tv-fill") . '" >' . '</i>
     </div>
   </div></a>';
 
     echo '<div class="card-body">';
-    echo '<h5 class="card-title">' . rawurldecode($movie['title']) . '</h5>';
-    echo '<div class="collapse" id="release_' . $movie['id'] . '">';
-    echo '<p class="card-text">' . rawurldecode($movie['tagline']) . '</p>';
-    echo '<button type="button" class="btn btn-primary video-btn" data-toggle="modal" data-src="https://www.youtube.com/embed/' . $movie['trailer'] . '" data-target="#v_modal">
+    echo '<h5 class="card-title">' . rawurldecode($release['title']) . '</h5>';
+    echo '<div class="collapse" id="release_' . $release['id'] . '">';
+    echo '<p class="card-text">' . rawurldecode($release['tagline']) . '</p>';
+    echo '<button type="button" class="btn btn-primary video-btn" data-toggle="modal" data-src="https://www.youtube.com/embed/' . $release['trailer'] . '" data-target="#v_modal">
     Trailer
   </button>';
-    echo '  <a name="info" href="release.php?id=' . $movie['id'] . '" class="btn btn-primary">More Info</a>';
+    echo '  <a name="info" href="release.php?id=' . $release['id'] . '" class="btn btn-primary">More Info</a>';
     echo '</div>';
 
     echo '</div></div></div> <br><br><br><br><br><br>';
@@ -182,6 +200,7 @@ function getYtIdFromURl($url)
     }
 }
 
+// Getss and returns a list of users registered to the web application
 function getAllUsers($db_link)
 {
     $getUsersQuery = "SELECT * FROM wf_users";
@@ -222,27 +241,19 @@ function handleDialog()
             $error = $_GET['error'];
         }
 
-        echo '<br><br><br><div class="alert ' . (($error == 'true') ? 'alert-danger"' : "alert-success") . ' alert-dismissable">
+        echo '
+        <br><br><br><div class="alert ' . (($error == 'true') ? 'alert-danger"' : "alert-success") . ' alert-dismissable">
       <h4 class="alert-heading">' . (($error == 'true') ? 'Failed!' : "Success") . '</h4>
-      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>';
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+      ';
+
+
         foreach ($messages as $msg) {
             echo "$msg";
         }
         echo "</div>";
     }
 }
-
-function generateRandomString($length = 10)
-{
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $charactersLength = strlen($characters);
-    $randomString = '';
-    for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[rand(0, $charactersLength - 1)];
-    }
-    return $randomString;
-}
-
 
 function deleteTitle($link, $id)
 {
@@ -271,7 +282,23 @@ function deleteCommentsFromTitle($link, $id)
     $result = @mysqli_query($link, $delComment);
 }
 
+
+
+// ===== Password =====
+
 function clearResetCode($link, $email){
     $query = "UPDATE `wf_users` SET `password_reset`='' WHERE `email` = '$email';";
     $result = mysqli_query($link, $query);
+}
+
+// Generates a random code
+function genRanCode($length = 10)
+{
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
 }

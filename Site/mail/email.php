@@ -6,7 +6,7 @@ function sendEmail($to, $subject, $message, $headers){
         echo $message;
         return true;
     } else {
-        echo 'not worked!';
+        echo 'Email failed to send!';
         return false;
     }
 }

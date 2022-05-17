@@ -32,6 +32,56 @@
     ?>
 </div>
 
+
+<div class="modal fade" id="v_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="bi bi-x-lg"></i></span>
+                    </button>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/Mkum7G-0vWg"
+                                id="the_trailer" allow="autoplay"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="release_section"></div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        var $videoSrc = "";
+
+        $('.video-btn').click(function () {
+            $videoSrc = $(this).data("src");
+            document.getElementById('the_trailer').src = $videoSrc;
+        });
+
+        $('#v_modal').on('hide.bs.modal', function (e) {
+            document.getElementById('the_trailer').src = "";
+        });
+
+
+        $.getJSON('https://craig.software/webflix/includes/search.php', function (data) {
+
+            for (var i = 0; i < data.length; i++) {
+                var obj = data[i];
+                var html = obj.title;
+
+            }
+        });
+
+    });
+</script>
+
+
 <?php
 require('includes/footer.php');
 ?>

@@ -18,11 +18,6 @@ $users = getAllUsers($link);
 ?>
 
 <body>
-<div class="form-group">
-    <span id="text1">Test</span>
-    <Input id="text1_input" class="form-control" style="display:none"/>
-</div>
-
 <div class="container">
 
     <table class="table">

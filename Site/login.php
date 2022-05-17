@@ -58,8 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         clearResetCode($link, $data['email']);
         header('Location: ' . $prev_url);
     } else {
-        $errors = $data;
-        header('Location: ' . $prev_url . "?dialog=" . json_encode($errors) . "&error=true");
+        header('Location: ' . $prev_url . "?dialog=" . json_encode(array('Your details are incorrect. Please try again.')) . "&error=true");
     }
 }
 

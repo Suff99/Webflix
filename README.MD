@@ -12,8 +12,8 @@ from the client (i.e. your lecturer), who will be available for a discussion in 
 - [x] Login
 - [x] Register
 - [ ] Forgot Password
-- [ ] Payment
-- [ ] Home
+- [x] Payment
+- [x] Home
 - [x] Movies
 - [x] TV Shows
 - [x] Single Movie

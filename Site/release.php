@@ -9,6 +9,9 @@
     <?php
     require('includes/database.php');
 
+
+
+
     $id = htmlspecialchars($_GET["id"]);
     $movieQuery = "SELECT * FROM wf_releases WHERE id = '$id';";
     $movieResult = mysqli_query($link, $movieQuery);
@@ -22,6 +25,13 @@
     $pageIdentifier = 'release';
     require('includes/nav.php');
     session();
+
+    if (!isset($_SESSION['username'])) {
+        header('Location: ' . 'login.php');
+    }
+
+    checkForPaid();
+
     if (isset($movie)) {
         createMetaTags($movie['title'], $movie['tagline'], json_decode($movie['images'])->poster);
     } else {

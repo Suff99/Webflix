@@ -16,8 +16,8 @@
 
 <h1>About Webflix</h1>
 
-<div class="row text-center justify-content-center align-items-center mx-0 px-0 text-black">
-    <p> Under Construction</p>
+<div>
+     At Webflix, we want to entertain the world. Whatever your taste, and no matter where you live, we give you access to best-in-class TV series, documentaries and feature films. Our members control what they want to watch, when they want it, with no ads, in one simple subscription. We’re streaming in multiple languages and countries, because great stories can come from anywhere and be loved everywhere. We are the world’s biggest fans of entertainment, and we’re always looking to help you find your next favorite story.
 </div>
 
 <?php

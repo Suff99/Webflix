@@ -150,12 +150,6 @@ describe('Guest User Access', () => {
 
     logout();
 
-    it('Validates guest users cannot make comments on releases', () => {
-        cy.visit('release.php?id=1')
-        cy.get('button[name="add_comment"]')
-            .should('not.visible')
-    })
-
     it('Validates guest users cannot access administration pages', () => {
         cy.visit('admin.php')
         cy.contains("You do not have permission to access the intended page.")
@@ -164,6 +158,9 @@ describe('Guest User Access', () => {
 })
 
 describe("Test invalid release" , () => {
+
+
+    login();
 
     afterEach(() => {
         cy.screenshot()

@@ -76,6 +76,10 @@ header('Content-Type: text/html; charset=utf-8');
             if (isset($_SESSION['username']) && strcmp($_SESSION['role'], "admin") == 0) {
                 echo '<li class="nav-item"> <a class="nav-link' . (($pageIdentifier == 'admin') ? ' active"' : "") . '" href="admin.php"><i class="bi bi-shield-fill-check"></i> Admin</a></li>';
             }
+
+            if (isset($_SESSION['username'])) {
+                echo '<li class="nav-item"> <a class="nav-link' . (($pageIdentifier == 'user') ? ' active"' : "") . '" href="user.php"><i class="bi bi-person-circle"></i> User</a></li>';
+            }
             ?>
 
             <li class="nav-item ml-auto">

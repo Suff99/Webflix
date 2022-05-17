@@ -8,7 +8,7 @@
 $pageIdentifier = "Sign in";
 require('includes/database.php');
 require('includes/nav.php');
-
+require_once('includes/util.php');
 
 createMetaTags("Register", "Register", "");
 
@@ -88,14 +88,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         addUser($link, $email, $userName, $first_name, $last_name, $password, $dob, $contact);
         header('Location: ' . "login.php?&dialog=" . json_encode($potentialErrors));
     } else {
+        echo '<pre>'; print_r($potentialErrors); echo '</pre>';
         header('Location: ' . "register.php?&error=true&dialog=" . json_encode($potentialErrors));
     }
-}
-
-function addUser($link, $uEmail, $uUsername, $uFirstName, $uLastName, $uPassword, $uDob, $uContact)
-{
-    $userInsert = "INSERT INTO wf_users (`email`, `username`, `first_name`, `last_name`, `password`, `registration`, `dob`, `contact_no`) VALUES ('$uEmail', '$uUsername', '$uFirstName', '$uLastName', SHA2('$uPassword',256), now(), STR_TO_DATE('$uDob','%d-%m-%Y'), '$uContact');";
-    $addUser = @mysqli_query($link, $userInsert);
 }
 
 ?>
