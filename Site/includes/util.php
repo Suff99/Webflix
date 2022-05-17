@@ -247,7 +247,7 @@ function handleDialog()
       <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
       ';
 
-
+        print_r($messages);    
         foreach ($messages as $msg) {
             echo "$msg";
         }

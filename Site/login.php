@@ -94,6 +94,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <button name="login" type="submit" class="btn btn-primary">Sign in</button>
                 <button type="button" class="btn btn-primary" onclick="window.location.href='register.php';">Register
                 </button>
+
+                <button type="button" class="btn btn-primary" onclick="window.location.href='new_pass.php';">Reset Password
+                </button>
             </form>
         </div>
     </div>
